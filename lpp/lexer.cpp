@@ -4,7 +4,6 @@ using namespace std;
 #include <vector>
 #include <string>
 #include <cctype>
-#include "tokens.h"
 
 class Lexer {
     public:
@@ -21,16 +20,13 @@ class Lexer {
             switch (currentChar) {
                 case '+':
                     position++;
-                    return Token{ADD, "+"};
+                    return Token{PLUS, "+"};
                 case '-':
                     position++;
-                    return Token{SUBTRACT, "-"};
+                    return Token{MINUS, "-"};
                 case '*':
                     position++;
-                    return Token{MULTIPLY, "*"};
-                case '/':
-                    position++;
-                    return Token{DIVIDE, "/"};
+                    return Token{MULTIPLICATION, "*"};
                 case '(':
                     position++;
                     return Token{LPAREN, "("};
@@ -49,7 +45,7 @@ class Lexer {
             }
         }
 
-        return Token{END, ""};
+        return Token{ILLEGAL, ""};
     }
 
     private:
@@ -63,7 +59,7 @@ class Lexer {
             numberValue += input[position];
             position++;
         }
-        return Token{NUMBER, numberValue};
+        return Token{NUMBER, numberValue};//Number ?
     }
 
 };

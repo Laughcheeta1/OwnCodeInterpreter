@@ -1,16 +1,15 @@
+#ifndef TOKEN_H
+#define TOKEN_H
 
+#include <string>
 
-using namespace std;
-
-class Tokens
-{
-    enum TokenType
+enum TokenType
     {
         ASSIGN, 
         COMMA,
         DIVISION,
         EQ,
-        EOF,
+        //EOF,
         FOR,
         FUNCTION,
         GT,
@@ -27,12 +26,16 @@ class Tokens
         MULTIPLICATION,
         NEGATION,
         NEQ,
+        NUMBER,
         PLUS,
         RBRACE,
         RPAREN,
         SEMICOLON
     };
 
-    
-
+struct Token {
+    TokenType type;
+    std::string value;
 };
+
+#endif // TOKEN_H
