@@ -9,7 +9,7 @@ class Tokens
         COMMA,
         DIVISION,
         EQ,
-        EOF,
+        //EOF,
         FOR,
         FUNCTION,
         GT,

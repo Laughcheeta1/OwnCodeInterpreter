@@ -1,15 +1,20 @@
 #include <iostream>
+#include <string>
 #include "../Header/Lexer.h"
 
+using namespace std;
+
 int main() {
-    std::string input = "3 + 4 * (2 - 1)";
-    Lexer lexer(input);
-
+    cout << "commence\n";
+    string input;
     Token token;
-    do {
-        token = lexer.getNextToken();
-        std::cout << "Token: type=" << token.type << ", value='" << token.value << "'" << std::endl;
-    } while (token.type != ILLEGAL);
 
+    while (getline(cin, input) && token.type != ILLEGAL)
+    {
+        Lexer lexer(input);
+        token = lexer.getNextToken();
+        cout << "Token: type = " << token.type << ", value = '" << token.value << "'\n";
+
+    }
     return 0;
 }

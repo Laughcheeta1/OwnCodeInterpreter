@@ -1,7 +1,6 @@
 using namespace std;
 
 #include <iostream>
-#include <vector>
 #include <string>
 #include <cctype>
 #include "../Header/Token.h"
@@ -35,6 +34,7 @@ class Lexer {
                 case ')':
                     position++;
                     return Token{RPAREN, ")"};
+
                 default:
                     // Skip whitespace characters
                     if (std::isspace(currentChar)) {
