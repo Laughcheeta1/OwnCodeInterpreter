@@ -4,6 +4,8 @@ using namespace std;
 #include <vector>
 #include <string>
 #include <cctype>
+#include "../Header/Token.h"
+
 
 class Lexer {
     public:
