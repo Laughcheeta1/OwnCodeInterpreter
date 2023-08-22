@@ -7,8 +7,27 @@ using namespace std;
 
 
 class Lexer {
-    public:
-    Lexer(const std::string& input) : input(input), position(0) {}
+
+private:
+
+    const string input;
+    size_t position;
+
+    Token readNumber() {
+        std::string numberValue;
+        while (position < input.size() && std::isdigit(input[position])) {
+            numberValue += input[position];
+            position++;
+        }
+        return Token{NUMBER, numberValue};//Number ?
+    }
+
+
+public:
+    Lexer(const string input) {
+        this->input = input;
+        position = 0;
+    }
 
     Token getNextToken() {
         while (position < input.size()) {
@@ -50,18 +69,5 @@ class Lexer {
         return Token{ILLEGAL, ""};
     }
 
-    private:
-
-    const std::string& input;
-    size_t position;
-
-    Token readNumber() {
-        std::string numberValue;
-        while (position < input.size() && std::isdigit(input[position])) {
-            numberValue += input[position];
-            position++;
-        }
-        return Token{NUMBER, numberValue};//Number ?
-    }
 
 };

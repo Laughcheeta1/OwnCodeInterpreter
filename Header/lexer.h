@@ -6,14 +6,14 @@
 
 class Lexer {
 public:
-    explicit Lexer(const std::string& input);
+    Lexer(const std::string input);
 
     Token getNextToken();
 
 private:
     Token readNumber();
 
-    const std::string& input;
+    const std::string input;
     size_t position;
 };
 
