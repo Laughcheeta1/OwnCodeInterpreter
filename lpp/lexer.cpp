@@ -1,19 +1,16 @@
-using namespace std;
-
 #include <iostream>
 #include <string>
 #include <cctype>
 #include "../Header/Token.h"
+#include "../Header/lexer.h"
 
 
-class Lexer {
+    Lexer::Lexer(std::string in) {
+        input = in;
+        position = 0;
+    }
 
-private:
-
-    const string input;
-    size_t position;
-
-    Token readNumber() {
+    Token Lexer::readNumber() {
         std::string numberValue;
         while (position < input.size() && std::isdigit(input[position])) {
             numberValue += input[position];
@@ -22,14 +19,7 @@ private:
         return Token{NUMBER, numberValue};//Number ?
     }
 
-
-public:
-    Lexer(const string input) {
-        this->input = input;
-        position = 0;
-    }
-
-    Token getNextToken() {
+    Token Lexer::getNextToken() {
         while (position < input.size()) {
             char currentChar = input[position];
 
@@ -68,6 +58,3 @@ public:
 
         return Token{ILLEGAL, ""};
     }
-
-
-};

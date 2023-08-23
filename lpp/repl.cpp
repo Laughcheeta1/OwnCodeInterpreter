@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include "../Header/Lexer.h"
+#include "../Header/lexer.h"
 
 using namespace std;
 

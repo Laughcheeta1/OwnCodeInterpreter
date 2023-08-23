@@ -1,20 +1,16 @@
 #ifndef LEXER_H
 #define LEXER_H
-
-#include <string>
 #include "Token.h"
 
 class Lexer {
-public:
-    Lexer(const std::string input);
+    private:
+        std::string input;
+        size_t position;
+        Token readNumber();
 
-    Token getNextToken();
 
-private:
-    Token readNumber();
-
-    const std::string input;
-    size_t position;
+    public:
+        explicit Lexer(std::string in);
+        Token getNextToken();
 };
-
-#endif // LEXER_H
+#endif
