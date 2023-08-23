@@ -4,13 +4,17 @@
 
 class Lexer {
     private:
-        std::string input;
-        size_t position;
+        Token token;
+        std::string line;
+        long size;
+        long position;
         Token readNumber();
-
+        Token readWords();
+        
 
     public:
-        explicit Lexer(std::string in);
-        Token getNextToken();
+        explicit Lexer();
+        Token getToken(char currentChar);
+        void readLine(std::string in);
 };
 #endif

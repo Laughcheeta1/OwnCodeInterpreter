@@ -4,17 +4,22 @@
 
 using namespace std;
 
+/*
+Theophile Arnould
+Jeronimo Sanchez
+Sebastian Ruiz
+Santiago Yepes
+*/
+
 int main() {
-    cout << "commence\n";
+    cout << "C--\nEl Frances, El Rockero, El Mamado y el Bitchless\nc-- Registered Trademark\nEscriba '.exit' para salir.\n\nc-- >>> ";
     string input;
-    Token token;
+    Lexer lexer;
 
-    while (getline(cin, input) && token.type != ILLEGAL)
+    while (getline(cin, input) && input.compare(".exit")) // If the input == ".exit", the method will return a 0, value that is interpreted by the language as a false
     {
-        Lexer lexer(input);
-        token = lexer.getNextToken();
-        cout << "Token: type = " << token.type << ", value = '" << token.value << "'\n";
-
+        lexer.readLine(input);
+        cout << "\nc-- >>> ";
     }
     return 0;
 }

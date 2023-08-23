@@ -5,6 +5,8 @@
 
 enum TokenType
     {
+        ILLEGAL,
+        WORD,
         ASSIGN, 
         COMMA,
         DIVISION,
@@ -15,8 +17,8 @@ enum TokenType
         GT,
         GTE,
         IDENT,
-        ILLEGAL,
         INT,
+        LSBRACE,
         LBRACE,
         LET,
         LPAREN,
@@ -29,12 +31,15 @@ enum TokenType
         NUMBER,
         PLUS,
         RBRACE,
+        RSBRACE,
         RPAREN,
-        SEMICOLON
+        SEMICOLON,
+        QUESTIONMARK
     };
 
 struct Token {
-    TokenType type;
+    std::string name;
+    TokenType placement;
     std::string value;
 };
 
