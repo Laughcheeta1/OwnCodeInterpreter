@@ -33,13 +33,13 @@
     ```
     pov ()
     ```
-        *pov stands for Por Otra Vez*
+    *pov stands for Por Otra Vez*
 
 - while:
     ```
     bbc ()
     ```
-        *bbc stands for Big Brain Code*
+    *bbc stands for Big Brain Code*
 
 - declare functions:
     ```
@@ -48,7 +48,7 @@
         code
     ]
     ```
-        *milf stands for Man I Love Functions*
+    *milf stands for Man I Love Functions*
 
 - print:
     ```
@@ -64,6 +64,6 @@
     ```
     bdsm ()
     ```
-        *bdsm stands for Back Data Submision Mean*
+    *bdsm stands for Back Data Submision Mean*
 
 - to end a line instead of using `;` like in c++ or in java, you use `$`
