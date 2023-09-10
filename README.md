@@ -35,7 +35,8 @@
     ```milf *function name* (parameters)
     [
         code
-    ]```
+    ]
+    ```
         *milf stands for Man I Love Functions*
 
 - print:
