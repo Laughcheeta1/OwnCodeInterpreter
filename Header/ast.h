@@ -11,6 +11,11 @@ class NodeAST
         Token value;
 
     public:
+        explicit NodeAST();
+        NodeAST* getParent();
+        NodeAST* getLeftChild();
+        NodeAST* getRightChild();
+        Token getValue();
 
-}
+};
 #endif
