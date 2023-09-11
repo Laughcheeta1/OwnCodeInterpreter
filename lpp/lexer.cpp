@@ -22,7 +22,7 @@
 
             token = getToken(in[position]); // Get the token of the current position
 
-            std::cout << "Token: name = " << token.name << ", type = " << token.placement << ", value = '" << token.value << "'\n"; // Show the token
+            std::cout << "Token: name = " << token.name  << ", value = '" << token.value << "'\n"; // Show the token
         }
     }
 
@@ -49,7 +49,7 @@
         }
 
         position --; // So the position ends up pointing to the last char read
-        return Token {"WORD", WORD, word};
+        return Token {"WORD", word};
     }
 
     // Given a char, return the token it reprents.
@@ -63,56 +63,56 @@
         }
         else if (currentChar == '+')
         {
-            return Token{"PLUS", PLUS, "+"};
+            return Token{"PLUS", "+"};
         }
         else if (currentChar == '-')
         {
-            return Token{"MINUS", MINUS, "-"};
+            return Token{"MINUS", "-"};
         }
         else if (currentChar == '*')
         {
-            return Token{"MINUS", MULTIPLICATION, "*"};
+            return Token{"MINUS", "*"};
         }
         else if (currentChar == '/')
         {
-            return Token{"DIVISION", DIVISION, "/"};
+            return Token{"DIVISION", "/"};
         }
         else if (currentChar == '(')
         {
-            return Token{"LPAREN", LPAREN, "("};
+            return Token{"LPAREN", "("};
         }
         else if (currentChar == ')')
         {
-            return Token{"RPAREN", RPAREN, ")"};
+            return Token{"RPAREN", ")"};
         }
         else if (currentChar == '[')
         {
-            return Token {"LSBRACE", LSBRACE, "["};
+            return Token {"LSBRACE", "["};
         }
         else if (currentChar == ']')
         {
-            return Token{"RSBRACE", RSBRACE, "]"};
+            return Token{"RSBRACE", "]"};
         }
         else if (currentChar == '{')
         {
-            return Token{"LBRACE", LBRACE, "{"};
+            return Token{"LBRACE", "{"};
         }
         else if (currentChar == '}')
         {
-            return Token {"RBRACE", RBRACE, "}"};
+            return Token {"RBRACE", "}"};
         }
         else if (currentChar == '=')
         {
-            return Token{"ASSIGN", ASSIGN, "="};
+            return Token{"ASSIGN", "="};
         }
         else if (currentChar == ',')
         {
-            return Token{"COMMA", COMMA, ","};
+            return Token{"COMMA", ","};
         }
         else if (currentChar == '?')
         {
-            return Token{"QUESTIONMARK", QUESTIONMARK, "?"};
+            return Token{"QUESTIONMARK", "?"};
         }
 
-        return Token{"ILLEGAL", ILLEGAL, ""}; // If is none of the above, it must be illegal
+        return Token{"ILLEGAL", ""}; // If is none of the above, it must be illegal
     }
