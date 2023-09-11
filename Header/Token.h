@@ -3,6 +3,7 @@
 
 #include <string>
 
+/*
 enum TokenType
     {
         ILLEGAL,
@@ -36,10 +37,9 @@ enum TokenType
         SEMICOLON,
         QUESTIONMARK
     };
-
+*/
 struct Token {
     std::string name;
-    TokenType placement;
     std::string value;
 };
 

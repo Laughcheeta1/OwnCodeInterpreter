@@ -35,7 +35,7 @@
         }
 
         position --; // So the position ends up pointing to the last char read
-        return Token{"NUMBER", NUMBER, numberValue};
+        return Token{"NUMBER", numberValue};
     }
 
     // When detected a alphabetical char, it means there can be a string following it, so we read that string as a whole word
