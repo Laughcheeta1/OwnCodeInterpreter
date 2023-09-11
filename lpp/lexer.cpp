@@ -63,27 +63,27 @@
         }
         else if (currentChar == '+')
         {
-            return Token {"PLUS", PLUS, "+"};
+            return Token{"PLUS", PLUS, "+"};
         }
         else if (currentChar == '-')
         {
-            return Token {"MINUS", MINUS, "-"};
+            return Token{"MINUS", MINUS, "-"};
         }
         else if (currentChar == '*')
         {
-            return Token {"MINUS", MULTIPLICATION, "*"};
+            return Token{"MINUS", MULTIPLICATION, "*"};
         }
         else if (currentChar == '/')
         {
-            return Token {"DIVISION", DIVISION, "/"};
+            return Token{"DIVISION", DIVISION, "/"};
         }
         else if (currentChar == '(')
         {
-            return Token {"LPAREN", LPAREN, "("};
+            return Token{"LPAREN", LPAREN, "("};
         }
         else if (currentChar == ')')
         {
-            return Token {"RPAREN", RPAREN, ")"};
+            return Token{"RPAREN", RPAREN, ")"};
         }
         else if (currentChar == '[')
         {
@@ -91,11 +91,11 @@
         }
         else if (currentChar == ']')
         {
-            return Token {"RSBRACE", RSBRACE, "]"};
+            return Token{"RSBRACE", RSBRACE, "]"};
         }
         else if (currentChar == '{')
         {
-            return Token {"LBRACE", LBRACE, "{"};
+            return Token{"LBRACE", LBRACE, "{"};
         }
         else if (currentChar == '}')
         {
@@ -103,15 +103,15 @@
         }
         else if (currentChar == '=')
         {
-            return Token {"ASSIGN", ASSIGN, "="};
+            return Token{"ASSIGN", ASSIGN, "="};
         }
         else if (currentChar == ',')
         {
-            return Token {"COMMA", COMMA, ","};
+            return Token{"COMMA", COMMA, ","};
         }
         else if (currentChar == '?')
         {
-            return Token {"QUESTIONMARK", QUESTIONMARK, "?"};
+            return Token{"QUESTIONMARK", QUESTIONMARK, "?"};
         }
 
         return Token{"ILLEGAL", ILLEGAL, ""}; // If is none of the above, it must be illegal
