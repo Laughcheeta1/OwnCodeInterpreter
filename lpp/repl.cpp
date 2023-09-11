@@ -6,7 +6,6 @@ using namespace std;
 
 /*
 Theophile Arnould
-Jeronimo Sanchez
 Sebastian Ruiz
 Santiago Yepes
 */
