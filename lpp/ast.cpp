@@ -56,6 +56,16 @@ using namespace std;
             return 3;
     }
 
+    NodeAST ast::placeOperand(NodeAST* previous, Token token)
+    {
+        if (previous == NULL)
+        {
+            
+        }
+
+
+    }
+
     /* Starting index and ending index are intended for parenthesis, so we can deal with them*/
     NodeAST* ast::makeTree(vector<Token> tokens, int currentIndex, int endingIndex) // TODO finish the implementation of the makeTree() function
     {
