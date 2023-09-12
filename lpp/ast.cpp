@@ -4,6 +4,22 @@
 using namespace std;
 
 // NodeAST class
+    void NodeAST::setParent(NodeAST* p)
+    {
+        parent = p;
+    }
+    void NodeAST::setLeftChild(NodeAST* lc)
+    {
+        leftChild = lc;
+    }
+    void NodeAST::setRightChild(NodeAST* rc)
+    {
+        rightChild = rc;
+    }
+    void NodeAST::setValue(Token val)
+    {
+        value = val;
+    }
     NodeAST* NodeAST::getParent()
     {
         return parent;
@@ -23,7 +39,7 @@ using namespace std;
 
 
 // ast class
-    int getPriority(string token)
+    int ast::getPriority(string token)
     {
         if (!token.compare("=") || !token.compare("<=") || !token.compare(">=") || !token.compare("<")
             || !token.compare(">"))
@@ -34,7 +50,15 @@ using namespace std;
 
         else if (!token.compare("*") || !token.compare("/"))
             return 2;
-        
-        else if (!token.compare("^") || !token.compare("raiz") || !token.compare("log")) // Finish the implementation of the raiz and log operand, for now, leave it there
+
+        // TODO Finish the implementation of the raiz and log operand, for now, leave it there
+        else if (!token.compare("^") || !token.compare("raiz") || !token.compare("log")) 
             return 3;
+    }
+
+    /* Starting index and ending index are intended for parenthesis, so we can deal with them*/
+    NodeAST* ast::makeTree(vector<Token> tokens, int currentIndex, int endingIndex) // TODO finish the implementation of the makeTree() function
+    {
+        NodeAST currentNode;
+        
     }
