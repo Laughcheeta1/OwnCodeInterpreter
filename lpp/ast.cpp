@@ -54,20 +54,18 @@ using namespace std;
         // TODO Finish the implementation of the raiz and log operand, for now, leave it there
         else if (!token.compare("^") || !token.compare("raiz") || !token.compare("log")) 
             return 3;
+
+        else // Must be a number, and numbers have the higher priority
+            return 4;
     }
 
-    NodeAST ast::placeOperand(NodeAST* previous, Token token)
+    NodeAST* ast::placeOperand(NodeAST* previous, Token token)
     {
-        if (previous == NULL)
-        {
-            
-        }
-
-
+        return NULL; // TODO
     }
 
     /* Starting index and ending index are intended for parenthesis, so we can deal with them*/
-    NodeAST* ast::makeTree(vector<Token> tokens, int currentIndex, int endingIndex) // TODO finish the implementation of the makeTree() function
+    NodeAST* ast::makeTree(vector<Token> tokens, int currentIndex, int endingIndex)
     {
         /* Remember that to free the memory from creating a class with "new", you use "delete *name of the pointer*"
         For more info check "https://stackoverflow.com/questions/4061514/c-object-created-with-new-destroyed-with-free-how-bad-is-this" */
@@ -84,10 +82,12 @@ using namespace std;
                 currentNode -> setValue(tokens[currentIndex]);
                 currentNode -> setLeftChild(NULL);
                 currentNode -> setRightChild(NULL);
-            }
+                currentNode -> setParent(lastNode);
+            } 
+            // TODO add when it is a parenthesis
             else // If not a number, must be an Operand
             {
-
+                placeOperand(lastNode, tokens[currentIndex]);
             }
 
             lastNode = currentNode;

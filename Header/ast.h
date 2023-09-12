@@ -26,8 +26,9 @@ class NodeAST
 class ast
 {
     private:
-        int getPriority(std::string token); // Returns the priority of the expression in the following range [0, 3]
-        NodeAST placeOperand(NodeAST* previous, Token token);
+        int getPriority(std::string token); // Returns the priority of the expression in the following range [0, 4]
+        NodeAST* placeOperand(NodeAST* previous, Token token); // Places the operand in the place it should
+                                                                // be, with the sons it should have.
         float evaluateRoot(std::string expresion); // TODO make this function
         float evaluateLog(std::string expresion); // TODO make this function
     
