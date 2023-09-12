@@ -114,5 +114,7 @@
             return Token{"QUESTIONMARK", "?"};
         }
 
-        return Token{"ILLEGAL", ""}; // If is none of the above, it must be illegal
+        position = size; // End the line if Ilegal token
+        std::string str = "";
+        return Token{"ILLEGAL", str.append(1, currentChar)}; // If is none of the above, it must be illegal
     }
