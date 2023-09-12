@@ -4,6 +4,14 @@
 using namespace std;
 
 // NodeAST class
+    NodeAST::NodeAST(NodeAST* par, NodeAST* lc, NodeAST* rc, Token val)
+    {
+        parent = par;
+        leftChild = lc;
+        rightChild = rc;
+        value = val;
+    }
+
     void NodeAST::setParent(NodeAST* p)
     {
         parent = p;
@@ -59,9 +67,17 @@ using namespace std;
             return 4;
     }
 
-    NodeAST* ast::placeOperand(NodeAST* previous, Token token)
+    NodeAST* ast::placeOperand(NodeAST* previous, Token token) // TODO finish the place Operand function
     {
-        return NULL; // TODO
+        /* When two characters have the same priority, evaluate from left to right, in case of the tree, have the right one (last to enter)
+        on top */
+        if (getPriority(token.value) > getPriority(previous -> getValue().value)) // Compare for more priority (stop climbing the tree)
+        {
+            NodeAST* result = new NodeAST()
+        }
+        // FIXME Have to stop before getting to a null top of the tree
+
+        return placeOperand(previous -> getParent(), token);
     }
 
     /* Starting index and ending index are intended for parenthesis, so we can deal with them*/
@@ -74,15 +90,11 @@ using namespace std;
         NodeAST* lastNode = NULL;
 
         while (currentIndex <= endingIndex)
-        {
-            currentNode = new NodeAST;
-            
+        {            
             if (tokens[currentIndex].name.compare("NUMBER") == 0) // if is a number
             {
-                currentNode -> setValue(tokens[currentIndex]);
-                currentNode -> setLeftChild(NULL);
-                currentNode -> setRightChild(NULL);
-                currentNode -> setParent(lastNode);
+                currentNode = new NodeAST(lastNode, NULL, NULL, tokens[currentIndex]);
+                // FIXME fix this error
             } 
             // TODO add when it is a parenthesis
             else // If not a number, must be an Operand
