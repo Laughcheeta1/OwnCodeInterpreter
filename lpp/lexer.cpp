@@ -71,7 +71,7 @@
         }
         else if (currentChar == '*')
         {
-            return Token{"MINUS", "*"};
+            return Token{"MULTIPLICATION", "*"};
         }
         else if (currentChar == '/')
         {

@@ -32,6 +32,8 @@ class ast
     
     public:
         NodeAST* makeTree(std::vector<Token> tokens, int currentIndex, int endingIndex); // Returns a pointer to the head node of the tree
+        void freeTree(NodeAST* currentNode); // TODO Free the memory that the tree is using, this is achieved by using delete(), since in the make tree function 
+            // I'm declaring a class by the keyword "new"
 
 };
 #endif
