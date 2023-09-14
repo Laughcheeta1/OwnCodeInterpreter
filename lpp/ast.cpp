@@ -67,6 +67,14 @@ using namespace std;
             return 4;
     }
 
+    NodeAST* ast::getRoot(NodeAST* node)
+    {
+        while (node -> getParent() != NULL)
+            node = node -> getParent();
+
+        return node;
+    }
+
     NodeAST* ast::placeOperand(NodeAST* upper, Token token)
     {
         /* When two characters have the same priority, evaluate from left to right, in case of the tree, have the right one (last to enter)
@@ -116,4 +124,6 @@ using namespace std;
             lastNode = currentNode;
             currentIndex++;
         }
+
+        return getRoot(currentNode);
     }

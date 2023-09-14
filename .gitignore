@@ -138,3 +138,6 @@ fabric.properties
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,clion
 
 .vscode/settings.json
+.vscode/tasks.json
+testing.cpp
+test.exe

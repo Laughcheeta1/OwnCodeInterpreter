@@ -32,6 +32,7 @@ class ast
                                                                 // be, with the sons it should have.
         float evaluateRoot(std::string expresion); // TODO make this function
         float evaluateLog(std::string expresion); // TODO make this function
+        NodeAST* getRoot(NodeAST* node); // Returns the head of the tree you created
     
     public:
         NodeAST* makeTree(std::vector<Token> tokens, int currentIndex, int endingIndex); // Returns a pointer to the head node of the tree

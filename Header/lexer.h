@@ -1,6 +1,7 @@
 #ifndef LEXER_H
 #define LEXER_H
 #include "Token.h"
+#include <vector>
 
 class Lexer {
     private:
@@ -15,6 +16,6 @@ class Lexer {
     public:
         explicit Lexer();
         Token getToken(char currentChar);
-        void readLine(std::string in);
+        std::vector<Token> readLine(std::string in);
 };
 #endif

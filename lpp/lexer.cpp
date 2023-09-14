@@ -1,18 +1,20 @@
 #include <iostream>
 #include <string>
 #include <cctype>
+#include <vector>
 #include "../Header/Token.h"
 #include "../Header/lexer.h"
 
     // Constructor
     Lexer::Lexer() {   }
 
-    void Lexer::readLine(std::string in)
+    std::vector<Token> Lexer::readLine(std::string in)
     {
         // Initialize the necessary variables
         position = -1;
         size = in.size();
         line = in;
+        std::vector<Token> tokens;
 
         while (++position < size)
         {
@@ -22,8 +24,17 @@
 
             token = getToken(in[position]); // Get the token of the current position
 
-            std::cout << "Token: name = " << token.name  << ", value = '" << token.value << "'\n"; // Show the token
+            if (token.name.compare("ILLEGAL") == 0)
+            {
+                std::cout << "Illegal Token '" << token.value << "'\n";
+                tokens.clear();
+                return tokens;
+            }
+
+            tokens.push_back(token);
         }
+
+        return tokens;
     }
 
     // When detecting a numerical char, there can be more digits to the number following it, so we read until we have a space, to grab the whole number
