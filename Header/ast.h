@@ -6,13 +6,13 @@
 class NodeAST
 {
     private:
-        explicit NodeAST(NodeAST* par, NodeAST* lc, NodeAST* rc, Token val);
         NodeAST* parent;
         NodeAST* leftChild;
         NodeAST* rightChild;
         Token value;
 
     public:
+        explicit NodeAST(NodeAST* par, NodeAST* lc, NodeAST* rc, Token val);
         void setParent(NodeAST* p);
         void setLeftChild(NodeAST* lc);
         void setRightChild(NodeAST* rc);

@@ -67,17 +67,29 @@ using namespace std;
             return 4;
     }
 
-    NodeAST* ast::placeOperand(NodeAST* previous, Token token) // TODO finish the place Operand function
+    NodeAST* ast::placeOperand(NodeAST* upper, Token token)
     {
         /* When two characters have the same priority, evaluate from left to right, in case of the tree, have the right one (last to enter)
         on top */
-        if (getPriority(token.value) > getPriority(previous -> getValue().value)) // Compare for more priority (stop climbing the tree)
-        {
-            NodeAST* result = new NodeAST()
-        }
-        // FIXME Have to stop before getting to a null top of the tree
+        if (upper == NULL)
+            return NULL;
 
-        return placeOperand(previous -> getParent(), token);
+        if (getPriority(token.value) > getPriority(upper -> getValue().value)) // Compare for more priority (stop climbing the tree)
+        {
+            NodeAST* result = new NodeAST(upper, upper -> getRightChild(), NULL, token);
+            upper -> getRightChild() -> setParent(result);
+            upper -> setRightChild(result);
+            return result;
+        }
+
+        NodeAST* result = placeOperand(upper -> getParent(), token);
+        if (result == NULL)
+        {
+            result = new NodeAST(NULL, upper, NULL, token);
+            upper -> setParent(result);
+        }
+
+        return result;
     }
 
     /* Starting index and ending index are intended for parenthesis, so we can deal with them*/
@@ -94,7 +106,6 @@ using namespace std;
             if (tokens[currentIndex].name.compare("NUMBER") == 0) // if is a number
             {
                 currentNode = new NodeAST(lastNode, NULL, NULL, tokens[currentIndex]);
-                // FIXME fix this error
             } 
             // TODO add when it is a parenthesis
             else // If not a number, must be an Operand
