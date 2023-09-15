@@ -60,7 +60,7 @@ using namespace std;
             return 2;
 
         // TODO Finish the implementation of the raiz and log operand, for now, leave it there
-        else if (!token.compare("^") || !token.compare("raiz") || !token.compare("log")) 
+        else if (!token.compare("^") || !token.compare("raiz") || !token.compare("log") || !token.compare("ln")) 
             return 3;
 
         else // Must be a number, and numbers have the higher priority

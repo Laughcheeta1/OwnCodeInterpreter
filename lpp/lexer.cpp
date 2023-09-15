@@ -2,11 +2,38 @@
 #include <string>
 #include <cctype>
 #include <vector>
+#include <iterator>
 #include "../Header/Token.h"
 #include "../Header/lexer.h"
 
     // Constructor
     Lexer::Lexer() {   }
+
+    std::vector<Token> Lexer::processResult(std::vector<Token> vec) // TODO finish the method
+    {
+        int i = 0;
+        while (i < vec.size())
+        {
+            if (!vec[i].value.compare("<") && !vec[i + 1].value.compare("="))
+            {
+                vec.erase(vec.begin() + i);
+                vec[i].value = "<=";
+                vec[i].name = "LESSER EQUAL";
+            }
+            else if (!vec[i].value.compare(">") && !vec[i + 1].value.compare("="))
+            {
+                vec.erase(vec.begin() + i);
+                vec[i].value = ">=";
+                vec[i].name = "GREATER EQUAL";
+            }
+            else if (!vec[i].value.compare("log"))
+            {
+                processLog(vec, i);
+            }
+            
+            i++;
+        }
+    }
 
     std::vector<Token> Lexer::readLine(std::string in)
     {
@@ -34,7 +61,7 @@
             tokens.push_back(token);
         }
 
-        return tokens;
+        return processResult(tokens);
     }
 
     // When detecting a numerical char, there can be more digits to the number following it, so we read until we have a space, to grab the whole number
@@ -74,27 +101,31 @@
         }
         else if (currentChar == '+')
         {
-            return Token{"PLUS", "+"};
+            return Token {"PLUS", "+"};
         }
         else if (currentChar == '-')
         {
-            return Token{"MINUS", "-"};
+            return Token {"MINUS", "-"};
         }
         else if (currentChar == '*')
         {
-            return Token{"MULTIPLICATION", "*"};
+            return Token {"MULTIPLICATION", "*"};
         }
         else if (currentChar == '/')
         {
-            return Token{"DIVISION", "/"};
+            return Token {"DIVISION", "/"};
+        }
+        else if (currentChar == '^')
+        {
+            return Token {"POWER", "^"};
         }
         else if (currentChar == '(')
         {
-            return Token{"LPAREN", "("};
+            return Token {"LPAREN", "("};
         }
         else if (currentChar == ')')
         {
-            return Token{"RPAREN", ")"};
+            return Token {"RPAREN", ")"};
         }
         else if (currentChar == '[')
         {
@@ -106,7 +137,7 @@
         }
         else if (currentChar == '{')
         {
-            return Token{"LBRACE", "{"};
+            return Token {"LBRACE", "{"};
         }
         else if (currentChar == '}')
         {
@@ -114,16 +145,21 @@
         }
         else if (currentChar == '=')
         {
-            return Token{"ASSIGN", "="};
+            return Token {"EQUAL", "="};
         }
         else if (currentChar == ',')
         {
-            return Token{"COMMA", ","};
+            return Token {"COMMA", ","};
         }
         else if (currentChar == '?')
         {
-            return Token{"QUESTIONMARK", "?"};
+            return Token {"QUESTIONMARK", "?"};
         }
+        else if (currentChar == ':')
+        {
+            return Token {"ASSIGN", ":"};
+        }
+
 
         position = size; // End the line if Ilegal token
         std::string str = "";

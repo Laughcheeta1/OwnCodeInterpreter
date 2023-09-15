@@ -11,7 +11,11 @@ class Lexer {
         long position;
         Token readNumber();
         Token readWords();
-        
+        Token readLessGreaterEqual(char t);
+        std::vector<Token> processResult(std::vector<Token> vec);
+        void processLog(std::vector<Token> vec, int index);
+        void processLn(std::vector<Token> vec, int index);
+        void processRaiz(std::vector<Token> vec, int index);
 
     public:
         explicit Lexer();

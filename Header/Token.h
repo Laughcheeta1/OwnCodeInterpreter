@@ -35,7 +35,12 @@ enum TokenType
         RSBRACE,
         RPAREN,
         SEMICOLON,
-        QUESTIONMARK
+        QUESTIONMARK,
+        LESSER EQUAL,
+        GREATER EQUAL,
+        POWER,
+        LOG,
+        LN
     };
 */
 struct Token {
