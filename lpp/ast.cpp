@@ -114,6 +114,8 @@ using namespace std;
             if (tokens[currentIndex].name.compare("NUMBER") == 0) // if is a number
             {
                 currentNode = new NodeAST(lastNode, NULL, NULL, tokens[currentIndex]);
+                if (lastNode != NULL)
+                    lastNode -> setRightChild(currentNode);
             } 
             // TODO add when it is a parenthesis
             else // If not a number, must be an Operand
