@@ -118,7 +118,7 @@ using namespace std;
             // TODO add when it is a parenthesis
             else // If not a number, must be an Operand
             {
-                placeOperand(lastNode, tokens[currentIndex]);
+                currentNode = placeOperand(lastNode, tokens[currentIndex]);
             }
 
             lastNode = currentNode;
