@@ -129,3 +129,13 @@ using namespace std;
 
         return getRoot(currentNode);
     }
+
+    void freeTree(NodeAST* currentNode)
+    {
+        if (currentNode -> getLeftChild() != NULL)
+            freeTree(currentNode -> getLeftChild());
+        if (currentNode -> getRightChild() != NULL)
+            freeTree(currentNode -> getRightChild());
+        
+        delete currentNode;
+    }
