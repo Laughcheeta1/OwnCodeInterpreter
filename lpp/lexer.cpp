@@ -92,6 +92,7 @@
 
     // When detecting a numerical char, there can be more digits to the number following it, so we read until we have a space, to grab the whole number
     Token Lexer::readNumber() {
+        // TODO: negative numbers
         std::string numberValue;
         bool isFloat = false;
         while (position < size && (std::isdigit(line[position]) || line[position] == '.')) {
