@@ -21,7 +21,7 @@ enum TokenType
         INT,
         LSBRACE,
         LBRACE,
-        LET,
+        LET, 
         LPAREN,
         LT,
         LTE,
@@ -29,16 +29,21 @@ enum TokenType
         MULTIPLICATION,
         NEGATION,
         NEQ,
-        NUMBER,
+        INTEGER,
+        FLOATNUMBER
         PLUS,
         RBRACE,
         RSBRACE,
         RPAREN,
         SEMICOLON,
         QUESTIONMARK,
+        EQUAL
         LESSER EQUAL,
         GREATER EQUAL,
+        LESS THAN
+        GREATER THAN
         POWER,
+        ROOT,
         LOG,
         LN
     };

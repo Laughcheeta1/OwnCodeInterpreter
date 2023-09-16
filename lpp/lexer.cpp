@@ -11,51 +11,54 @@
 
     std::vector<Token> Lexer::processResult(std::vector<Token> vec) // TODO finish the method
     {
-        int i = 0;
-        while (i < vec.size())
+        position = 0;
+        while (position < vec.size())
         {
-            if (!vec[i].value.compare("<") && !vec[i + 1].value.compare("="))
+            if (!vec[position].value.compare("<") && !vec[position + 1].value.compare("="))
             {
-                vec.erase(vec.begin() + i);
-                vec[i].value = "<=";
-                vec[i].name = "LESSER EQUAL";
+                vec.erase(vec.begin() + position);
+                vec[position].value = "<=";
+                vec[position].name = "LESSER EQUAL";
             }
-            else if (!vec[i].value.compare(">") && !vec[i + 1].value.compare("="))
+            else if (!vec[position].value.compare(">") && !vec[position + 1].value.compare("="))
             {
-                vec.erase(vec.begin() + i);
-                vec[i].value = ">=";
-                vec[i].name = "GREATER EQUAL";
+                vec.erase(vec.begin() + position);
+                vec[position].value = ">=";
+                vec[position].name = "GREATER EQUAL";
             }
-            else if (!vec[i].value.compare("log") || !vec[i].value.compare("LOG"))
+            else if (!vec[position].value.compare("log") || !vec[position].value.compare("LOG"))
             {
-                processLog(vec, i);
+                processLog(vec);
             }
-            else if (!vec[i].value.compare("ln") || !vec[i].value.compare("LN"))
+            else if (!vec[position].value.compare("ln") || !vec[position].value.compare("LN"))
             {
-                processLn(vec, i);
+                processLn(vec);
             }
-            else if (!vec[i].value.compare("raiz") || !vec[i].value.compare("RAIZ"))
+            else if (!vec[position].value.compare("raiz") || !vec[position].value.compare("RAIZ"))
             {
-                processRaiz(vec, i);
+                processRaiz(vec);
             }
 
-            i++;
+            position++;
         }
     }
 
-    void Lexer::processLog(std::vector<Token> vec, int index)
+    void Lexer::processLog(std::vector<Token> vec)
     {
         // TODO: finish this
+        // leave the LOG in the form "log(number1, number2)"
     }
 
-    void Lexer::processLn(std::vector<Token> vec, int index)
+    void Lexer::processLn(std::vector<Token> vec)
     {
         // TODO: finish this
+        // leave the LN in the form "ln(number1)"
     }
 
-    void Lexer::processRaiz(std::vector<Token> vec, int index)
+    void Lexer::processRaiz(std::vector<Token> vec)
     {
         // TODO: finish this
+        // leave the RAIZ in the form "raiz(number1, number2)"
     }
 
     std::vector<Token> Lexer::readLine(std::string in)
@@ -90,14 +93,20 @@
     // When detecting a numerical char, there can be more digits to the number following it, so we read until we have a space, to grab the whole number
     Token Lexer::readNumber() {
         std::string numberValue;
-        while (position < size && std::isdigit(line[position])) {
+        bool isFloat = false;
+        while (position < size && (std::isdigit(line[position]) || line[position] == '.')) {
+            if (line[position] == '.')
+                isFloat = true;
+
             numberValue += line[position];
             position++;
         }
 
         position --; // So the position ends up pointing to the last char read
-        return Token{"NUMBER", numberValue};
+
+        return (isFloat) ? Token {"FLOAT", numberValue} : Token {"INTEGER", numberValue};
     }
+
 
     // When detected a alphabetical char, it means there can be a string following it, so we read that string as a whole word
     Token Lexer::readWords()
@@ -181,6 +190,14 @@
         else if (currentChar == ':')
         {
             return Token {"ASSIGN", ":"};
+        }
+        else if (currentChar == '<')
+        {
+            return Token {"LESS THAN", "<"};
+        }
+        else if (currentChar == '>')
+        {
+            return Token {"GREATER THAN", ">"};
         }
 
 

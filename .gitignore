@@ -140,4 +140,4 @@ fabric.properties
 .vscode/settings.json
 .vscode/tasks.json
 testing.cpp
-test.exe
+*.exe

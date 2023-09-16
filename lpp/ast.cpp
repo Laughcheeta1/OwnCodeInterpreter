@@ -49,18 +49,18 @@ using namespace std;
 // ast class
     int ast::getPriority(string token)
     {
-        if (!token.compare("=") || !token.compare("<=") || !token.compare(">=") || !token.compare("<")
-            || !token.compare(">"))
+        if (!token.compare("EQUAL") || !token.compare("LESSER EQUAL") || !token.compare("GREATER EQUAL") || !token.compare("LESS THAN")
+            || !token.compare("GREATER THAN"))
             return 0;
 
-        else if (!token.compare("+") || !token.compare("-"))
+        else if (!token.compare("PLUS") || !token.compare("MINUS"))
             return 1;
 
-        else if (!token.compare("*") || !token.compare("/"))
+        else if (!token.compare("MULTIPLICATION") || !token.compare("DIVISION"))
             return 2;
 
         // TODO Finish the implementation of the raiz and log operand, for now, leave it there
-        else if (!token.compare("^") || !token.compare("raiz") || !token.compare("log") || !token.compare("ln")) 
+        else if (!token.compare("POWER") || !token.compare("ROOT") || !token.compare("LOG") || !token.compare("LN")) 
             return 3;
 
         else // Must be a number, and numbers have the higher priority
@@ -82,7 +82,7 @@ using namespace std;
         if (upper == NULL)
             return NULL;
 
-        if (getPriority(token.value) > getPriority(upper -> getValue().value)) // Compare for more priority (stop climbing the tree)
+        if (getPriority(token.name) > getPriority(upper -> getValue().name)) // Compare for more priority (stop climbing the tree)
         {
             NodeAST* result = new NodeAST(upper, upper -> getRightChild(), NULL, token);
             upper -> getRightChild() -> setParent(result);
@@ -130,6 +130,7 @@ using namespace std;
         return getRoot(currentNode);
     }
 
+    // Frees up the tree in a inorder manner
     void freeTree(NodeAST* currentNode)
     {
         if (currentNode -> getLeftChild() != NULL)

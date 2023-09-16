@@ -13,9 +13,9 @@ class Lexer {
         Token readWords();
         Token readLessGreaterEqual(char t);
         std::vector<Token> processResult(std::vector<Token> vec);
-        void processLog(std::vector<Token> vec, int index);
-        void processLn(std::vector<Token> vec, int index);
-        void processRaiz(std::vector<Token> vec, int index);
+        void processLog(std::vector<Token> vec);
+        void processLn(std::vector<Token> vec);
+        void processRaiz(std::vector<Token> vec);
 
     public:
         explicit Lexer();
