@@ -99,6 +99,10 @@ using namespace std;
 
         return result;
     }
+    NodeAST* ast::makeTree(vector<Token> tokens)
+    {
+        return makeTree(tokens, 0, tokens.size() - 1);
+    }
 
     /* Starting index and ending index are intended for parenthesis, so we can deal with them*/
     NodeAST* ast::makeTree(vector<Token> tokens, int currentIndex, int endingIndex)

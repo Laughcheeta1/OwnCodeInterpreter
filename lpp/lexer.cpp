@@ -95,7 +95,7 @@
         // TODO: negative numbers
         std::string numberValue;
         bool isFloat = false;
-        while (position < size && (std::isdigit(line[position]) || line[position] == '.')) {
+        while (position < size && (std::isdigit(line[position]) || line[position] == '.' || line[position] == '-')) {
             if (line[position] == '.')
                 isFloat = true;
 
@@ -138,6 +138,10 @@
         }
         else if (currentChar == '-')
         {
+            if (position + 1 < size && isdigit(line[position + 1]) && !isdigit(line[position - 1])) // If it is the start of a negative number
+            {
+                readNumber();
+            }
             return Token {"MINUS", "-"};
         }
         else if (currentChar == '*')

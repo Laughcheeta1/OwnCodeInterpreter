@@ -33,9 +33,10 @@ class ast
         float evaluateRoot(std::string expresion); // TODO make this function
         float evaluateLog(std::string expresion); // TODO make this function
         NodeAST* getRoot(NodeAST* node); // Returns the head of the tree you created
+        NodeAST* makeTree(std::vector<Token> tokens, int currentIndex, int endingIndex); // Returns a pointer to the head node of the tree
     
     public:
-        NodeAST* makeTree(std::vector<Token> tokens, int currentIndex, int endingIndex); // Returns a pointer to the head node of the tree
+        NodeAST* makeTree(std::vector<Token> tokens); // Returns a pointer to the head node of the tree
         void freeTree(NodeAST* currentNode); // Given the head node of the tree, frees all the memory
         // TODO Free the memory that the tree is using, this is achieved by using delete(), since in the make tree function 
             // I'm declaring a class by the keyword "new"
