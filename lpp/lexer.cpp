@@ -6,6 +6,37 @@
 #include "../Header/Token.h"
 #include "../Header/lexer.h"
 
+    // When detecting a numerical char, there can be more digits to the number following it, so we read until we have a space, to grab the whole number
+    Token Lexer::readNumber() 
+    {
+        std::string numberValue;
+        bool isFloat = false;
+        while (position < size && (std::isdigit(line[position]) || line[position] == '.' || line[position] == '-')) {
+            if (line[position] == '.')
+                isFloat = true;
+
+            numberValue += line[position];
+            position++;
+        }
+
+        position --; // So the position ends up pointing to the last char read
+
+        return (isFloat) ? Token {"FLOAT", numberValue} : Token {"INTEGER", numberValue};
+    }
+
+    // When detected a alphabetical char, it means there can be a string following it, so we read that string as a whole word
+    Token Lexer::readWords()
+    {
+        std::string word = "";
+        while (position < size && std::isalpha(line[position]))
+        {
+            word.append(1, line[position]);
+            position++;
+        }
+
+        position --; // So the position ends up pointing to the last char read
+        return Token {"WORD", word};
+    }
 
     // Stripping the white space because this helps with checking things
     std::string Lexer::stripWhiteSpace(std::string line)
@@ -55,24 +86,6 @@
         }
     }
 
-    void Lexer::processLog(std::vector<Token> vec)
-    {
-        // TODO: finish this
-        // leave the LOG in the form "log(number1, number2)"
-    }
-
-    void Lexer::processLn(std::vector<Token> vec)
-    {
-        // TODO: finish this
-        // leave the LN in the form "ln(number1)"
-    }
-
-    void Lexer::processRaiz(std::vector<Token> vec)
-    {
-        // TODO: finish this
-        // leave the RAIZ in the form "raiz(number1, number2)"
-    }
-
     std::vector<Token> Lexer::readLine(std::string in)
     {
         // Initialize the necessary variables
@@ -100,37 +113,23 @@
 
         return processResult(tokens);
     }
-
-    // When detecting a numerical char, there can be more digits to the number following it, so we read until we have a space, to grab the whole number
-    Token Lexer::readNumber() {
-        std::string numberValue;
-        bool isFloat = false;
-        while (position < size && (std::isdigit(line[position]) || line[position] == '.' || line[position] == '-')) {
-            if (line[position] == '.')
-                isFloat = true;
-
-            numberValue += line[position];
-            position++;
-        }
-
-        position --; // So the position ends up pointing to the last char read
-
-        return (isFloat) ? Token {"FLOAT", numberValue} : Token {"INTEGER", numberValue};
+    
+    void Lexer::processLog(std::vector<Token> vec)
+    {
+        // TODO: finish this
+        // leave the LOG in the form "log(number1, number2)"
     }
 
-
-    // When detected a alphabetical char, it means there can be a string following it, so we read that string as a whole word
-    Token Lexer::readWords()
+    void Lexer::processLn(std::vector<Token> vec)
     {
-        std::string word = "";
-        while (position < size && std::isalpha(line[position]))
-        {
-            word.append(1, line[position]);
-            position++;
-        }
+        // TODO: finish this
+        // leave the LN in the form "ln(number1)"
+    }
 
-        position --; // So the position ends up pointing to the last char read
-        return Token {"WORD", word};
+    void Lexer::processRaiz(std::vector<Token> vec)
+    {
+        // TODO: finish this
+        // leave the RAIZ in the form "raiz(number1, number2)"
     }
 
     // Given a char, return the token it reprents.
