@@ -11,14 +11,13 @@ class Lexer {
         long position;
         Token readNumber();
         Token readWords();
-        Token readLessGreaterEqual(char t);
         std::vector<Token> processResult(std::vector<Token> vec);
         void processLog(std::vector<Token> vec);
         void processLn(std::vector<Token> vec);
         void processRaiz(std::vector<Token> vec);
+        std::string stripWhiteSpace(std::string line);
 
     public:
-        explicit Lexer();
         Token getToken(char currentChar);
         std::vector<Token> readLine(std::string in);
 };

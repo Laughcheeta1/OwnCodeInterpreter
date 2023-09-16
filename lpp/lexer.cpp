@@ -6,8 +6,20 @@
 #include "../Header/Token.h"
 #include "../Header/lexer.h"
 
-    // Constructor
-    Lexer::Lexer() {   }
+
+    // Stripping the white space because this helps with checking things
+    std::string Lexer::stripWhiteSpace(std::string line)
+    {
+        std::string result = "";
+        int x = line.size();
+        for (int i = 0; i < x; i++)
+        {
+            if (line[i] != ' ')
+                result.append(1, line[i]);
+        }
+
+        return result;
+    }
 
     std::vector<Token> Lexer::processResult(std::vector<Token> vec) // TODO finish the method
     {
@@ -64,6 +76,8 @@
     std::vector<Token> Lexer::readLine(std::string in)
     {
         // Initialize the necessary variables
+        in = stripWhiteSpace(in); // This is for facilitating the lexxer process, with things like checking for a negative number
+
         position = -1;
         size = in.size();
         line = in;
@@ -71,10 +85,7 @@
 
         while (++position < size)
         {
-            if (in[position] == ' ') // Theres no need to check for "\n", since the getline() function does not actually read it
-            // The 10 in ASCII is "Line feed", basically the "enter" key
-                continue;
-
+            // No need to ignore whitespace since i got rid of it above
             token = getToken(in[position]); // Get the token of the current position
 
             if (token.name.compare("ILLEGAL") == 0)
@@ -92,7 +103,6 @@
 
     // When detecting a numerical char, there can be more digits to the number following it, so we read until we have a space, to grab the whole number
     Token Lexer::readNumber() {
-        // TODO: negative numbers
         std::string numberValue;
         bool isFloat = false;
         while (position < size && (std::isdigit(line[position]) || line[position] == '.' || line[position] == '-')) {
@@ -138,7 +148,9 @@
         }
         else if (currentChar == '-')
         {
-            if (position + 1 < size && isdigit(line[position + 1]) && !isdigit(line[position - 1])) // If it is the start of a negative number
+            if (position + 1 < size && isdigit(line[position + 1]) && (position >= 1 || !isdigit(line[position - 1])))
+                // If it is the start of a negative number, the condition (position == 0) is in case the negative is the 
+                    // first thing in the line
             {
                 readNumber();
             }
