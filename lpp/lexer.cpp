@@ -26,15 +26,15 @@
                 vec[i].value = ">=";
                 vec[i].name = "GREATER EQUAL";
             }
-            else if (!vec[i].value.compare("log"))
+            else if (!vec[i].value.compare("log") || !vec[i].value.compare("LOG"))
             {
                 processLog(vec, i);
             }
-            else if (!vec[i].value.compare("ln"))
+            else if (!vec[i].value.compare("ln") || !vec[i].value.compare("LN"))
             {
                 processLn(vec, i);
             }
-            else if (!vec[i].value.compare("raiz"))
+            else if (!vec[i].value.compare("raiz") || !vec[i].value.compare("RAIZ"))
             {
                 processRaiz(vec, i);
             }
@@ -45,17 +45,17 @@
 
     void Lexer::processLog(std::vector<Token> vec, int index)
     {
-        if ()
+        // TODO: finish this
     }
 
     void Lexer::processLn(std::vector<Token> vec, int index)
     {
-        
+        // TODO: finish this
     }
 
     void Lexer::processRaiz(std::vector<Token> vec, int index)
     {
-        
+        // TODO: finish this
     }
 
     std::vector<Token> Lexer::readLine(std::string in)
