@@ -30,9 +30,32 @@
             {
                 processLog(vec, i);
             }
-            
+            else if (!vec[i].value.compare("ln"))
+            {
+                processLn(vec, i);
+            }
+            else if (!vec[i].value.compare("raiz"))
+            {
+                processRaiz(vec, i);
+            }
+
             i++;
         }
+    }
+
+    void Lexer::processLog(std::vector<Token> vec, int index)
+    {
+        if ()
+    }
+
+    void Lexer::processLn(std::vector<Token> vec, int index)
+    {
+        
+    }
+
+    void Lexer::processRaiz(std::vector<Token> vec, int index)
+    {
+        
     }
 
     std::vector<Token> Lexer::readLine(std::string in)
