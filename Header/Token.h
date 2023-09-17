@@ -18,7 +18,7 @@
 // Logical
     const std::string TRUE = "TRUE"; // true
     const std::string FALSE = "FALSE"; // false
-    const std::string NEGATION = "NEGATION"; // ! // TODO: implement the negation
+    const std::string NEGATION = "NEGATION"; // !
     const std::string EQUAL = "EQUAL"; // =
     const std::string LESSTHAN = "LESSTHAN"; // <
     const std::string GREATERTHAN = "GREATERTHAN"; // >

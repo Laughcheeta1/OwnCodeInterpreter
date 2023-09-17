@@ -131,7 +131,6 @@ using namespace std;
 
         while (currentIndex <= endingIndex)
         {   
-            // TODO: implement the negation
             if (tokens[currentIndex].name.compare(WORD) == 0)
             {
                 // TODO: could be a variable, bu for now, return NULL

@@ -258,7 +258,7 @@
         {
             return Token {GREATERTHAN, ">"};
         }
-        else if (currentChar == '!') // TODO: Implement this in the code
+        else if (currentChar == '!')
         {
             return Token {NEGATION, "!"};
         }
