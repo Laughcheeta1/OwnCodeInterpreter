@@ -105,6 +105,7 @@ using namespace std;
         return result;
     }
 
+    // TODO: Parenthesis inside parenthesis do not work
     int ast::getClosingParenIndex(std::vector<Token> tokens, int startingIndex, int maxIndex)
     {
         while (startingIndex <= maxIndex && tokens[startingIndex].name.compare(RPAREN))
@@ -122,6 +123,9 @@ using namespace std;
 
     /* Starting index and ending index are intended for parenthesis, so we can deal with them*/
     NodeAST* ast::makeTree(vector<Token> tokens, int currentIndex, int endingIndex)
+        // FIXME: make parenthesis inside parenthesis work, that can be achieved by ending the function when encountering an
+            // end parenthesis
+
     {
         /* Remember that to free the memory from creating a class with "new", you use "delete *name of the pointer*"
         For more info check "https://stackoverflow.com/questions/4061514/c-object-created-with-new-destroyed-with-free-how-bad-is-this" */
@@ -207,7 +211,7 @@ using namespace std;
                 int sIndex = currentIndex + 1, nIndex = getClosingParenIndex(tokens, sIndex, endingIndex);
                 currentIndex = nIndex;
 
-                if (nIndex)
+                if (nIndex == -1)
                 {
                     freeTree(getRoot(lastNode));
                     return NULL;
