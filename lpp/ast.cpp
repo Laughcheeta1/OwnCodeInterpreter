@@ -71,6 +71,9 @@ using namespace std;
 
     NodeAST* ast::getRoot(NodeAST* node)
     {
+        if (node == NULL)
+            return NULL;
+            
         while (node -> getParent() != NULL)
             node = node -> getParent();
 
@@ -118,7 +121,13 @@ using namespace std;
         while (currentIndex <= endingIndex)
         {   
             // TODO: implement the negation
-            if (tokens[currentIndex].name.compare(NEGATION) == 0)
+            if (tokens[currentIndex].name.compare(WORD) == 0)
+            {
+                // TODO: could be a variable, bu for now, return NULL
+                freeTree(getRoot(lastNode));
+                return NULL;
+            }
+            else if (tokens[currentIndex].name.compare(NEGATION) == 0)
             {
 
             }
@@ -130,7 +139,10 @@ using namespace std;
                 
                 NodeAST* n = makeTree(tokens, sIndex, currentIndex - 1); // Get the tree inside the parenthesis
                 if (n == NULL) // Check for validity of the tree
+                {
+                    freeTree(getRoot(lastNode));
                     return NULL;
+                }
 
                 Parser p; // Variable we are using to evaluate
                 Lexer l;
@@ -138,7 +150,10 @@ using namespace std;
                 std::string typeOfValue = l.getTypeOfValue(result);
 
                 if (!typeOfValue.compare(ILLEGAL)) // If result is valid
+                {
+                    freeTree(getRoot(lastNode));
                     return NULL;
+                }
 
                 Token t = Token {typeOfValue, result};
 
@@ -169,10 +184,11 @@ using namespace std;
     // Frees up the tree in a inorder manner
     void ast::freeTree(NodeAST* currentNode)
     {
-        if (currentNode -> getLeftChild() != NULL)
-            freeTree(currentNode -> getLeftChild());
-        if (currentNode -> getRightChild() != NULL)
-            freeTree(currentNode -> getRightChild());
+        if (currentNode == NULL)
+            return;
+
+        freeTree(currentNode -> getLeftChild());
+        freeTree(currentNode -> getRightChild());
         
         delete currentNode;
     }

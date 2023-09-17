@@ -11,6 +11,8 @@
 
 
 std::string Parser::evaluateTree(NodeAST* node){
+    if (node == NULL)
+        return ILLEGAL;
 
     if (node->getValue().name.compare(INTEGER) == 0 || node->getValue().name.compare(DECIMAL)== 0
     || node->getValue().name.compare(TRUE)== 0 || node->getValue().name.compare(FALSE)==0){

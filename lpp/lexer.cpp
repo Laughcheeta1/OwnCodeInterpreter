@@ -12,7 +12,7 @@
     {
         std::string numberValue = "";
 
-        if (line[position] == '-' && (position == 0 || !isdigit(line[position - 1]))) // FIXME: it is representing every number as a negative number
+        if (line[position] == '-' && (position == 0 || !isdigit(line[position - 1])))
         {
             numberValue += line[position];
             position++;
