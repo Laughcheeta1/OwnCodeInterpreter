@@ -9,11 +9,22 @@
     // When detecting a numerical char, there can be more digits to the number following it, so we read until we have a space, to grab the whole number
     Token Lexer::readNumber() 
     {
-        std::string numberValue;
-        bool isFloat = false;
-        while (position < size && (std::isdigit(line[position]) || line[position] == '.' || line[position] == '-')) {
+        std::string numberValue = "";
+
+        if (line[position] == '-')
+            numberValue += line[position];
+
+        bool isFloat = false, hasPoint = false;
+        while (position < size && (std::isdigit(line[position]) || line[position] == '.')) {
             if (line[position] == '.')
-                isFloat = true;
+            {
+                if (hasPoint)
+                    return Token {"ILLEGAL", ""};
+                else
+                    
+                    
+            }
+                
 
             numberValue += line[position];
             position++;
@@ -35,7 +46,15 @@
         }
 
         position --; // So the position ends up pointing to the last char read
-        return Token {"WORD", word};
+
+        if (!word.compare("true"))
+            return Token {"TRUE", "true"};
+        
+        else if (!word.compare("false"))
+            return Token {"FALSE", "false"};
+        
+        else
+            return Token {"WORD", word};
     }
 
     // Stripping the white space because this helps with checking things
@@ -84,6 +103,8 @@
 
             position++;
         }
+
+        return vec;
     }
 
     std::vector<Token> Lexer::readLine(std::string in)
@@ -151,7 +172,7 @@
                 // If it is the start of a negative number, the condition (position == 0) is in case the negative is the 
                     // first thing in the line
             {
-                readNumber();
+                return readNumber();
             }
             return Token {"MINUS", "-"};
         }

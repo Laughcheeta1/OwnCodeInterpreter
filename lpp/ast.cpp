@@ -135,7 +135,7 @@ using namespace std;
     }
 
     // Frees up the tree in a inorder manner
-    void freeTree(NodeAST* currentNode)
+    void ast::freeTree(NodeAST* currentNode)
     {
         if (currentNode -> getLeftChild() != NULL)
             freeTree(currentNode -> getLeftChild());
