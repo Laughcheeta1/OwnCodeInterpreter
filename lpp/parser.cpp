@@ -64,6 +64,14 @@ std::string Parser::evaluateTree(NodeAST* node){
             return "FALSE";
         }
     }
+    else if(node->getLeftChild()->getValue().name.compare("WORD") == 0||node->getLeftChild()->getValue().name.compare("TRUE") == 0||
+    node->getLeftChild()->getValue().name.compare("FALSE") == 0){
+        return "Operacion no válida";
+    }
+    else if(node->getRightChild()->getValue().name.compare("WORD") == 0||node->getRightChild()->getValue().name.compare("TRUE") == 0||
+    node->getRightChild()->getValue().name.compare("FALSE") == 0){
+        return "Operacion no válida";
+    }
     else if((node->getLeftChild()->getValue().name.compare("INTEGER")==0 || node->getLeftChild()->getValue().name.compare("FLOATNUMBER")==0) 
     && (!(node->getRightChild()->getValue().name.compare("INTEGER")== 0) || !(node->getRightChild()->getValue().name.compare("FLOATNUMBER")== 0)))
     {
