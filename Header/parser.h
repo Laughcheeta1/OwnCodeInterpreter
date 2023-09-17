@@ -8,7 +8,7 @@ class Parser
 
 
     public:
-        std::string evaluateTree(NodeAST* head);
+        static std::string evaluateTree(NodeAST* head);
 };
 
 #endif

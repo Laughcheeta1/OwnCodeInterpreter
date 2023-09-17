@@ -104,6 +104,17 @@ using namespace std;
 
         return result;
     }
+
+    int ast::getClosingParenIndex(std::vector<Token> tokens, int startingIndex, int maxIndex)
+    {
+        while (startingIndex <= maxIndex && tokens[startingIndex].name.compare(RPAREN))
+        {
+            startingIndex++;
+        }
+
+        return (startingIndex > maxIndex) ? -1 : startingIndex;
+    }
+
     NodeAST* ast::makeTree(vector<Token> tokens)
     {
         return makeTree(tokens, 0, tokens.size() - 1);
@@ -129,25 +140,90 @@ using namespace std;
             }
             else if (tokens[currentIndex].name.compare(NEGATION) == 0)
             {
+                if (currentIndex + 1 <= endingIndex) // There must be something behind the negation
+                {
+                    std::string result;
+                    if (tokens[currentIndex + 1].name.compare(LPAREN) == 0) // is is an expresion in parenthesis
+                    {
+                        // currentIndex + 2, since current index is the !, not the parenthesis
+                        int sIndex = currentIndex + 2, nIndex = getClosingParenIndex(tokens, sIndex, endingIndex);
+                        currentIndex = nIndex;
+                        
+                        if (nIndex == -1)
+                        {
+                            freeTree(getRoot(lastNode));
+                            return NULL;
+                        }
 
+                        NodeAST* n = makeTree(tokens, sIndex, nIndex - 1); 
+                            // Get the tree inside the parenthesis
+                        if (n == NULL) // Check for validity of the tree
+                        {
+                            freeTree(getRoot(lastNode));
+                            return NULL;
+                        }
+
+                        result = Parser::evaluateTree(n);
+                        result = Lexer::getTypeOfValue(result);
+
+                        if (result.compare(TRUE) == 0)
+                            result = FALSE;
+                        else if (result.compare(FALSE) == 0)
+                            result = TRUE;
+                        else // If none of the above, must be a non valid expression
+                        {
+                            freeTree(getRoot(lastNode));
+                            return NULL;
+                        }
+                    }
+                    else if (tokens[currentIndex + 1].name.compare(TRUE) == 0)
+                    {
+                        currentIndex ++;
+                        result = FALSE;
+                    }
+                    
+                    else if (tokens[currentIndex + 1].name.compare(FALSE) == 0)
+                    {
+                        currentIndex ++;
+                        result = TRUE;
+                    }
+
+                    else // Theres an invalid thing behind the negation
+                    {
+                        freeTree(getRoot(lastNode));
+                        return NULL;
+                    }
+
+                    Token t = Token {result, result}; // Make the base node
+                    currentNode = new NodeAST(lastNode, NULL, NULL, t);
+                }
+                else // If there isn't something behind the negation
+                {
+                    freeTree(getRoot(lastNode));
+                    return NULL;
+                }
             }
             else if (tokens[currentIndex].name.compare(LPAREN) == 0)
             {
-                int sIndex = currentIndex + 1;
-                while (tokens[currentIndex].name.compare(RPAREN)) // Find the index of the closing parenthesis
-                    currentIndex++;
+                int sIndex = currentIndex + 1, nIndex = getClosingParenIndex(tokens, sIndex, endingIndex);
+                currentIndex = nIndex;
+
+                if (nIndex)
+                {
+                    freeTree(getRoot(lastNode));
+                    return NULL;
+                }
                 
-                NodeAST* n = makeTree(tokens, sIndex, currentIndex - 1); // Get the tree inside the parenthesis
+                NodeAST* n = makeTree(tokens, sIndex, nIndex - 1); 
+                    // Get the tree inside the parenthesis
                 if (n == NULL) // Check for validity of the tree
                 {
                     freeTree(getRoot(lastNode));
                     return NULL;
                 }
 
-                Parser p; // Variable we are using to evaluate
-                Lexer l;
-                std::string result = p.evaluateTree(n); // Get the result inside of parenthesis
-                std::string typeOfValue = l.getTypeOfValue(result);
+                std::string result = Parser::evaluateTree(n); // Get the result inside of parenthesis
+                std::string typeOfValue = Lexer::getTypeOfValue(result);
 
                 if (!typeOfValue.compare(ILLEGAL)) // If result is valid
                 {

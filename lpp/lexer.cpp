@@ -50,14 +50,7 @@
 
         position --; // So the position ends up pointing to the last char read
 
-        if (!word.compare("true"))
-            return Token {TRUE, "true"};
-        
-        else if (!word.compare("false"))
-            return Token {FALSE, "false"};
-        
-        else
-            return Token {WORD, word};
+        return Token {WORD, word};
     }
 
     // Stripping the white space because this helps with checking things
@@ -102,6 +95,14 @@
             else if (!vec[position].value.compare("raiz") || !vec[position].value.compare("RAIZ"))
             {
                 processRaiz(vec);
+            }
+            else if (!vec[position].value.compare(TRUE))
+            {
+                vec[position].name = TRUE;
+            }
+            else if (!vec[position].value.compare(FALSE))
+            {
+                vec[position].name = FALSE;
             }
 
             position++;
@@ -157,11 +158,11 @@
 
     std::string Lexer::getTypeOfValue(std::string str) // Returns the type of variable that is the string
     {
-        if (!str.compare("true"))
+        if (!str.compare(TRUE))
         {
             return TRUE;
         }
-        else if (!str.compare("false"))
+        else if (!str.compare(FALSE))
         {
             return FALSE;
         }

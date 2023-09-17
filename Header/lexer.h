@@ -20,7 +20,7 @@ class Lexer {
         Token getToken(char currentChar); // Returns the token the char corresponds to
 
     public:
-        std::string getTypeOfValue(std::string str); // Given a string, returns wheter it corresponds to a INTEGER, FLOATNUMBER or a bool
+        static std::string getTypeOfValue(std::string str); // Given a string, returns wheter it corresponds to a INTEGER, FLOATNUMBER or a bool
         std::vector<Token> readLine(std::string in); // Reads a line of input, and returns a vector of tokens
 };
 #endif
