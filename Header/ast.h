@@ -12,6 +12,7 @@ class NodeAST
         Token value;
 
     public:
+        // Constructor, getters and setters
         explicit NodeAST(NodeAST* par, NodeAST* lc, NodeAST* rc, Token val);
         void setParent(NodeAST* p);
         void setLeftChild(NodeAST* lc);
@@ -20,7 +21,7 @@ class NodeAST
         NodeAST* getParent();
         NodeAST* getLeftChild();
         NodeAST* getRightChild();
-        Token getValue();
+        Token getValue(); 
 
 };
 

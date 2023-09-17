@@ -6,7 +6,7 @@
 * Santiago Yepes Mesa
 
 ## Language Specifications
-- Math operands like: `+`, `-`, `*`, `/`, `()`, `**` (power) stands the same
+- Math operands like: `+`, `-`, `*`, `/`, `()`, `^` (power) stands the same
 
 - declarar variables:
 ```

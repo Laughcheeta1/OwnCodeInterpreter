@@ -4,12 +4,20 @@
 
 class IllegalToken : public std::exception
 {
+    private:
+        std::string token; // Value of the illegal token
+
     public:
-        std::string what(Token tok);
+        explicit IllegalToken(std::string tok);
+        std::string what();
 };
 
 class UncompletedExpression : public std::exception
 {
+    private:
+        std::string token; // Value of the illegal token
+
     public:
-        std::string what(Token tok);
+        explicit UncompletedExpression(std::string tok);
+        std::string what();
 };

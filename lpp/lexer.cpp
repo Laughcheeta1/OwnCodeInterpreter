@@ -5,6 +5,7 @@
 #include <iterator>
 #include "../Header/Token.h"
 #include "../Header/lexer.h"
+#include "../Header/exceptions.h"
 
     // When detecting a numerical char, there can be more digits to the number following it, so we read until we have a space, to grab the whole number
     Token Lexer::readNumber() 
@@ -19,12 +20,11 @@
             if (line[position] == '.')
             {
                 if (hasPoint)
-                    return Token {"ILLEGAL", ""};
+                    return Token {"ILLEGAL", numberValue += '.'};
+                    //throw IllegalToken(numberValue += '.');
                 else
-                    
-                    
+                    isFloat = true;
             }
-                
 
             numberValue += line[position];
             position++;
@@ -107,7 +107,7 @@
         return vec;
     }
 
-    std::vector<Token> Lexer::readLine(std::string in)
+    std::vector<Token> Lexer::readLine(std::string in) // If encounter Illegal expression, return unitary expression with Illegal Token
     {
         // Initialize the necessary variables
         in = stripWhiteSpace(in); // This is for facilitating the lexxer process, with things like checking for a negative number
@@ -119,12 +119,11 @@
 
         while (++position < size)
         {
-            // No need to ignore whitespace since i got rid of it above
+            // No need to ignore whitespace since i got rid of it above    
             token = getToken(in[position]); // Get the token of the current position
-
+            
             if (token.name.compare("ILLEGAL") == 0)
             {
-                std::cout << "Illegal Token '" << token.value << "'\n";
                 tokens.clear();
                 return tokens;
             }
@@ -151,6 +150,37 @@
     {
         // TODO: finish this
         // leave the RAIZ in the form "raiz(number1, number2)"
+    }
+
+    std::string Lexer::getTypeOfValue(std::string str) // Returns the type of variable that is the string
+    {
+        if (!str.compare("true"))
+        {
+            return "TRUE";
+        }
+        else if (!str.compare("false"))
+        {
+            return "FALSE";
+        }
+        
+        int i = 0, x = str.size();
+        bool isFloat = false;
+        while (i < x)
+        {
+            if (str[i] == '-')
+            {   }
+            else if (str[i] == '.')
+                isFloat = true;
+            
+            else if (!isdigit(str[i]))
+                return "ILLEGAL";
+            i++;
+        }
+
+        if (isFloat)
+            return "FLOATNUMBER";
+        else
+            return "INTEGER";
     }
 
     // Given a char, return the token it reprents.
@@ -236,7 +266,13 @@
         {
             return Token {"GREATER THAN", ">"};
         }
+        else if (currentChar == '!') // TODO: Implement this in the code
+        {
+            return Token {"NEGATION", "!"};
+        }
 
+        // std::string str = "";
+        // throw IllegalToken(str.append(1, currentChar));
 
         position = size; // End the line if Ilegal token
         std::string str = "";

@@ -1,13 +1,23 @@
 #include "../Header/exceptions.h"
 
 // Illegal Token
-    std::string IllegalToken::what(Token tok)
+    IllegalToken::IllegalToken(std::string tok)
     {
-        return "Illegal expression " + tok.value;
+        token = tok;
+    }
+
+    std::string IllegalToken::what()
+    {
+        return "Illegal expression " + token;
     }
 
 // Uncompleted Expresion
-    std::string UncompletedExpression::what(Token tok)
+    UncompletedExpression::UncompletedExpression(std::string tok)
     {
-        return "Uncompleted expresion " + tok.value;
+        token = tok;
+    }
+
+    std::string UncompletedExpression::what()
+    {
+        return "Uncompleted expresion " + token;
     }
