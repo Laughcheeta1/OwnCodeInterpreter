@@ -266,6 +266,10 @@
         {
             return Token {"GREATER THAN", ">"};
         }
+        else if (currentChar == '!') // TODO: Implement this in the code
+        {
+            return Token {"NEGATION", "!"};
+        }
 
         // std::string str = "";
         // throw IllegalToken(str.append(1, currentChar));

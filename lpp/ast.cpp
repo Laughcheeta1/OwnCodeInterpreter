@@ -117,8 +117,12 @@ using namespace std;
 
         while (currentIndex <= endingIndex)
         {   
-            // TODO: finish when it is a parenthesis
-            if (tokens[currentIndex].name.compare("LPAREN") == 0)
+            // TODO: implement the negation
+            if (tokens[currentIndex].name.compare("NEGATION") == 0)
+            {
+
+            }
+            else if (tokens[currentIndex].name.compare("LPAREN") == 0)
             {
                 int sIndex = currentIndex + 1;
                 while (tokens[currentIndex].name.compare("RPAREN")) // Find the index of the closing parenthesis
