@@ -11,75 +11,95 @@
 
 
 std::string Parser::evaluateTree(NodeAST* node){
-    if((node->getLeftChild()->getValue().name.compare("INTEGER")==0 || node->getLeftChild()->getValue().name.compare("FLOATNUMBER")==0) 
-    && (node->getRightChild()->getValue().name.compare("INTEGER")== 0 || node->getRightChild()->getValue().name.compare("FLOATNUMBER")== 0))
-    {
-        double a = stod(node->getLeftChild()->getValue().value);
-        double b = stod(node->getRightChild()->getValue().value);
 
+    if (node->getValue().name.compare("INTEGER") == 0 || node->getValue().name.compare("FLOATNUMBER")== 0
+    || node->getValue().name.compare("TRUE")== 0 || node->getValue().name.compare("FALSE")==0){
+        return node->getValue().value;
+    }
+
+    std:: string left = evaluateTree(node->getLeftChild());
+    std:: string right = evaluateTree(node->getRightChild());
+
+
+    if ((left.compare("TRUE") == 0 || left.compare("FALSE")==0) && 
+    (right.compare("TRUE")== 0 || right.compare("FALSE")==0)){
+
+        if (node->getValue().value.compare("=") == 0){
+            if (left.compare(right)==0){
+            return "TRUE";
+            } else {
+            return "FALSE";
+            }
+        } else {
+            return "ILLEGAL";
+        }
+    } else if((!(left.compare("TRUE") == 0) || !(left.compare("FALSE")==0)) && 
+    (right.compare("TRUE")== 0 || right.compare("FALSE")==0)) {
+        return "ILLEGAL";
+    } else if ((left.compare("TRUE") == 0 || left.compare("FALSE")==0) && 
+    (!(right.compare("TRUE")== 0) || !(right.compare("FALSE")==0))){
+        return "ILLEGAL";
+    } else {
+
+        double a = stod(left);
+        double b = stod(right);
+        
         if (node->getValue().value.compare("+") == 0){
-            std:: string c = std::to_string(a+b);
-            return c;
+                std:: string c = std::to_string(a+b);
+                return c;
         }
         else if (node->getValue().value.compare("-") == 0){
-            std:: string c = std::to_string(a-b);
-            return c;
+                std:: string c = std::to_string(a-b);
+                return c;
         }
         else if (node->getValue().value.compare("/") == 0){
-            std:: string c = std::to_string(a/b);
-            return c;
+                std:: string c = std::to_string(a/b);
+                return c;
         }
         else if (node->getValue().value.compare("*") == 0){
-            std:: string c = std::to_string(a*b);
-            return c;
+                std:: string c = std::to_string(a*b);
+                return c;
         }
         else if (node->getValue().value.compare("<") == 0){
-            if (a < b){
-                return "TRUE";
-            }
-            return "FALSE";
+                if (a < b){
+                    return "TRUE";
+                }
+                return "FALSE";
         }
         else if (node->getValue().value.compare(">") == 0){
-            if (a > b){
-                return "TRUE";
-            }
-            return "FALSE";
+                if (a > b){
+                    return "TRUE";
+                }
+                return "FALSE";
         }
         else if (node->getValue().value.compare("=") == 0){
-            if (a == b){
-                return "TRUE";
-            }
-            return "FALSE";
+                if (a == b){
+                    return "TRUE";
+                }
+                return "FALSE";
         }
         else if (node->getValue().value.compare("<=") == 0){
-            if (a <= b){
-                return "TRUE";
-            }
-            return "FALSE";
+                if (a <= b){
+                    return "TRUE";
+                }
+                return "FALSE";
         }
         else if (node->getValue().value.compare(">=") == 0){
-            if (a >= b){
-                return "TRUE";
-            }
-            return "FALSE";
+                if (a >= b){
+                    return "TRUE";
+                }
+                return "FALSE";
+
+        } else {
+            return "ILLEGAL";
         }
+
     }
-    else if(node->getLeftChild()->getValue().name.compare("WORD") == 0||node->getLeftChild()->getValue().name.compare("TRUE") == 0||
-    node->getLeftChild()->getValue().name.compare("FALSE") == 0){
-        return "Operacion no válida";
+    
+    if (left.compare("ILLEGAL")== 0 || right.compare("ILLEGAL")==0){
+        return "ILLEGAL";
     }
-    else if(node->getRightChild()->getValue().name.compare("WORD") == 0||node->getRightChild()->getValue().name.compare("TRUE") == 0||
-    node->getRightChild()->getValue().name.compare("FALSE") == 0){
-        return "Operacion no válida";
-    }
-    else if((node->getLeftChild()->getValue().name.compare("INTEGER")==0 || node->getLeftChild()->getValue().name.compare("FLOATNUMBER")==0) 
-    && (!(node->getRightChild()->getValue().name.compare("INTEGER")== 0) || !(node->getRightChild()->getValue().name.compare("FLOATNUMBER")== 0)))
-    {
-       return evaluateTree(node->getRightChild());
-    }
-    else if((!(node->getLeftChild()->getValue().name.compare("INTEGER")==0) || !(node->getLeftChild()->getValue().name.compare("FLOATNUMBER")==0)) 
-    && (node->getRightChild()->getValue().name.compare("INTEGER")== 0 || node->getRightChild()->getValue().name.compare("FLOATNUMBER")== 0))
-    {
-       return evaluateTree(node->getLeftChild());
-    }
+    
+   
+    
 }
