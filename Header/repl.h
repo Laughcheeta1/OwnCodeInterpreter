@@ -9,7 +9,7 @@
 
 void startTerminal()
 {
-    std::cout << "C--\nEl Frances, El Rockero, El Mamado y el Bitchless\nc-- Registered Trademark\nEscriba '.exit' para salir.\n\nc-- >>> ";
+    std::cout << "C--\nEl Frances, El Mamado y el Bitchless\nc-- Registered Trademark\nEscriba '.exit' para salir.\n\nc-- >>> ";
     std::string input;
     Lexer lexer;
 

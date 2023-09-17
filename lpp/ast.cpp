@@ -51,18 +51,18 @@ using namespace std;
 // ast class
     int ast::getPriority(string token)
     {
-        if (!token.compare("EQUAL") || !token.compare("LESSER EQUAL") || !token.compare("GREATER EQUAL") || !token.compare("LESS THAN")
-            || !token.compare("GREATER THAN"))
+        if (!token.compare(EQUAL) || !token.compare(LESSEREQUAL) || !token.compare(GREATEREQUAL) || !token.compare(LESSTHAN)
+            || !token.compare(GREATERTHAN))
             return 0;
 
-        else if (!token.compare("PLUS") || !token.compare("MINUS"))
+        else if (!token.compare(PLUS) || !token.compare(MINUS))
             return 1;
 
-        else if (!token.compare("MULTIPLICATION") || !token.compare("DIVISION"))
+        else if (!token.compare(MULTIPLICATION) || !token.compare(DIVISION))
             return 2;
 
         // TODO Finish the implementation of the raiz and log operand, for now, leave it there
-        else if (!token.compare("POWER") || !token.compare("ROOT") || !token.compare("LOG") || !token.compare("LN")) 
+        else if (!token.compare(POWER) || !token.compare(ROOT) || !token.compare(LOG) || !token.compare(LN)) 
             return 3;
 
         else // Must be a number, and numbers have the higher priority
@@ -118,17 +118,17 @@ using namespace std;
         while (currentIndex <= endingIndex)
         {   
             // TODO: implement the negation
-            if (tokens[currentIndex].name.compare("NEGATION") == 0)
+            if (tokens[currentIndex].name.compare(NEGATION) == 0)
             {
 
             }
-            else if (tokens[currentIndex].name.compare("LPAREN") == 0)
+            else if (tokens[currentIndex].name.compare(LPAREN) == 0)
             {
                 int sIndex = currentIndex + 1;
-                while (tokens[currentIndex].name.compare("RPAREN")) // Find the index of the closing parenthesis
+                while (tokens[currentIndex].name.compare(RPAREN)) // Find the index of the closing parenthesis
                     currentIndex++;
                 
-                NodeAST* n = makeTree(tokens, currentIndex + 1, currentIndex - 1); // Get the tree inside the parenthesis
+                NodeAST* n = makeTree(tokens, sIndex, currentIndex - 1); // Get the tree inside the parenthesis
                 if (n == NULL) // Check for validity of the tree
                     return NULL;
 
@@ -137,7 +137,7 @@ using namespace std;
                 std::string result = p.evaluateTree(n); // Get the result inside of parenthesis
                 std::string typeOfValue = l.getTypeOfValue(result);
 
-                if (!typeOfValue.compare("ILLEGAL")) // If result is valid
+                if (!typeOfValue.compare(ILLEGAL)) // If result is valid
                     return NULL;
 
                 Token t = Token {typeOfValue, result};
@@ -147,7 +147,8 @@ using namespace std;
                     lastNode -> setRightChild(currentNode);
 
             }
-            else if (tokens[currentIndex].name.compare("NUMBER") == 0) // if is a number
+            else if (tokens[currentIndex].name.compare(INTEGER) == 0 || tokens[currentIndex].name.compare(DECIMAL) == 0) 
+                // if is a number
             {
                 currentNode = new NodeAST(lastNode, NULL, NULL, tokens[currentIndex]);
                 if (lastNode != NULL)

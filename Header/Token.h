@@ -3,69 +3,41 @@
 
 #include <string>
 
-const std::string INTEGER = "INTEGER";
-const std::string DECIMALNUMBER = "FLOATNUMBER";
-const std::string PLUS = "+";
-const std::string MINUS = "-";
-const std::string MULTIPLICATION = "*";
-const std::string DIVISION = "/";
-const std::string POWER = "^";
-const std::string ROOT = "root";
-const std::string LOG = "log";
-const std::string LN = "ln";
-const std::string TRUE = "true";
-const std::string FALSE = "false";
-const std::string NEGATION = "!";
-const std::string EQUAL = "=";
-const std::string LESSTHAN = "<";
-const std::string GREATERTHAN = ">";
-const std::string LESSEREQUAL = "<=";
-const std::string GREATEREQUAL = ">=";
-const std::string ASSIGN = ":";
-const std::string LPAREN = "(";
-const std::string RPAREN = ")";
-const std::string COMMA = ",";
+// Numerical:
+    const std::string INTEGER = "INTEGER";
+    const std::string DECIMAL = "FLOATNUMBER";
+    const std::string PLUS = "PLUS"; // +
+    const std::string MINUS = "MINUS"; // -
+    const std::string MULTIPLICATION = "MULTIPLICATION"; // *
+    const std::string DIVISION = "DIVISION"; // /
+    const std::string POWER = "POWER"; // ^
+    const std::string ROOT = "ROOT"; // root
+    const std::string LOG = "LOG"; // log
+    const std::string LN = "LN"; // ln
 
+// Logical
+    const std::string TRUE = "TRUE"; // true
+    const std::string FALSE = "FALSE"; // false
+    const std::string NEGATION = "NEGATION"; // ! // TODO: implement the negation
+    const std::string EQUAL = "EQUAL"; // =
+    const std::string LESSTHAN = "LESSTHAN"; // <
+    const std::string GREATERTHAN = "GREATERTHAN"; // >
+    const std::string LESSEREQUAL = "LESSEREQUAL"; // <=
+    const std::string GREATEREQUAL = "GREATEREQUAL"; // >=
 
-// TODO: hacer todos los nombres de las cosas como true y false en const strings, por si despues los queremos cambiar
-/*
-    The tokes:
-        Numerical:
-            INTEGER
-            FLOATNUMBER
+// Programming Wise
+    const std::string ASSIGN = "ASSIGN"; // :
 
-        Mathematical:
-            PLUS : '+'
-            MINUS : '-'
-            MULTIPLICATION : '*'
-            DIVISION : '/'
-            POWER : '^'
-            ROOT : 'root'
-            LOG : 'log'
-            LN : 'ln'
-        
-        Logical:
-            TRUE : 'true' // TODO: have to do this
-            FALSE : 'false' // TODO: have to do this
-            NEGATION : '!' // TODO: have to do negation
-            EQUAL : '='
-            LESS THAN : '<'
-            GREATER THAN : '>'
-            LESSER EQUAL : '<='
-            GREATER EQUAL : '>='
+// Text
+    const std::string WORD = "WORD";
+    const std::string LPAREN = "LPAREN"; // (
+    const std::string RPAREN = "RPAREN"; // )
+    const std::string COMMA = "COMMA"; // ,
+    const std::string LSBRACE = "LSBRACE";
+    const std::string RSBRACE = "RSBRACE";
 
-        Programming wise
-            ASSIGN : ':'
-
-        Texts:
-            WORD
-            LPAREN : '('
-            RPAREN : ')'
-            COMMA : ','
-        
-        Other:
-            ILLEGAL
-*/
+// Other
+    const std::string ILLEGAL = "ILLEGAL";
 
 struct Token {
     std::string name;

@@ -12,33 +12,35 @@
 
 std::string Parser::evaluateTree(NodeAST* node){
 
-    if (node->getValue().name.compare("INTEGER") == 0 || node->getValue().name.compare("FLOATNUMBER")== 0
-    || node->getValue().name.compare("TRUE")== 0 || node->getValue().name.compare("FALSE")==0){
+    if (node->getValue().name.compare(INTEGER) == 0 || node->getValue().name.compare(DECIMAL)== 0
+    || node->getValue().name.compare(TRUE)== 0 || node->getValue().name.compare(FALSE)==0){
         return node->getValue().value;
     }
+    else if (node -> getValue().name.compare(WORD) == 0)
+        return ILLEGAL;
 
     std:: string left = evaluateTree(node->getLeftChild());
     std:: string right = evaluateTree(node->getRightChild());
 
 
-    if ((left.compare("TRUE") == 0 || left.compare("FALSE")==0) && 
-    (right.compare("TRUE")== 0 || right.compare("FALSE")==0)){
+    if ((left.compare(TRUE) == 0 || left.compare(FALSE)==0) && 
+    (right.compare(TRUE)== 0 || right.compare(FALSE)==0)){
 
         if (node->getValue().value.compare("=") == 0){
             if (left.compare(right)==0){
-            return "TRUE";
+            return TRUE;
             } else {
-            return "FALSE";
+            return FALSE;
             }
         } else {
-            return "ILLEGAL";
+            return ILLEGAL;
         }
-    } else if((!(left.compare("TRUE") == 0) || !(left.compare("FALSE")==0)) && 
-    (right.compare("TRUE")== 0 || right.compare("FALSE")==0)) {
-        return "ILLEGAL";
-    } else if ((left.compare("TRUE") == 0 || left.compare("FALSE")==0) && 
-    (!(right.compare("TRUE")== 0) || !(right.compare("FALSE")==0))){
-        return "ILLEGAL";
+    } else if((!(left.compare(TRUE) == 0) || !(left.compare(FALSE)==0)) && 
+    (right.compare(TRUE)== 0 || right.compare(FALSE)==0)) {
+        return ILLEGAL;
+    } else if ((left.compare(TRUE) == 0 || left.compare(FALSE)==0) && 
+    (!(right.compare(TRUE)== 0) || !(right.compare(FALSE)==0))){
+        return ILLEGAL;
     } else {
 
         double a = stod(left);
@@ -62,42 +64,42 @@ std::string Parser::evaluateTree(NodeAST* node){
         }
         else if (node->getValue().value.compare("<") == 0){
                 if (a < b){
-                    return "TRUE";
+                    return TRUE;
                 }
-                return "FALSE";
+                return FALSE;
         }
         else if (node->getValue().value.compare(">") == 0){
                 if (a > b){
-                    return "TRUE";
+                    return TRUE;
                 }
-                return "FALSE";
+                return FALSE;
         }
         else if (node->getValue().value.compare("=") == 0){
                 if (a == b){
-                    return "TRUE";
+                    return TRUE;
                 }
-                return "FALSE";
+                return FALSE;
         }
         else if (node->getValue().value.compare("<=") == 0){
                 if (a <= b){
-                    return "TRUE";
+                    return TRUE;
                 }
-                return "FALSE";
+                return FALSE;
         }
         else if (node->getValue().value.compare(">=") == 0){
                 if (a >= b){
-                    return "TRUE";
+                    return TRUE;
                 }
-                return "FALSE";
+                return FALSE;
 
         } else {
-            return "ILLEGAL";
+            return ILLEGAL;
         }
 
     }
     
-    if (left.compare("ILLEGAL")== 0 || right.compare("ILLEGAL")==0){
-        return "ILLEGAL";
+    if (left.compare(ILLEGAL)== 0 || right.compare(ILLEGAL)==0){
+        return ILLEGAL;
     }
     
    

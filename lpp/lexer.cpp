@@ -12,15 +12,18 @@
     {
         std::string numberValue = "";
 
-        if (line[position] == '-')
+        if (line[position] == '-' && (position == 0 || !isdigit(line[position - 1]))) // FIXME: it is representing every number as a negative number
+        {
             numberValue += line[position];
+            position++;
+        }
 
-        bool isFloat = false, hasPoint = false;
+        bool isFloat = false;
         while (position < size && (std::isdigit(line[position]) || line[position] == '.')) {
             if (line[position] == '.')
             {
-                if (hasPoint)
-                    return Token {"ILLEGAL", numberValue += '.'};
+                if (isFloat)
+                    return Token {ILLEGAL, numberValue += '.'};
                     //throw IllegalToken(numberValue += '.');
                 else
                     isFloat = true;
@@ -32,7 +35,7 @@
 
         position --; // So the position ends up pointing to the last char read
 
-        return (isFloat) ? Token {"FLOAT", numberValue} : Token {"INTEGER", numberValue};
+        return (isFloat) ? Token {DECIMAL, numberValue} : Token {INTEGER, numberValue};
     }
 
     // When detected a alphabetical char, it means there can be a string following it, so we read that string as a whole word
@@ -48,13 +51,13 @@
         position --; // So the position ends up pointing to the last char read
 
         if (!word.compare("true"))
-            return Token {"TRUE", "true"};
+            return Token {TRUE, "true"};
         
         else if (!word.compare("false"))
-            return Token {"FALSE", "false"};
+            return Token {FALSE, "false"};
         
         else
-            return Token {"WORD", word};
+            return Token {WORD, word};
     }
 
     // Stripping the white space because this helps with checking things
@@ -80,13 +83,13 @@
             {
                 vec.erase(vec.begin() + position);
                 vec[position].value = "<=";
-                vec[position].name = "LESSER EQUAL";
+                vec[position].name = LESSEREQUAL;
             }
             else if (!vec[position].value.compare(">") && !vec[position + 1].value.compare("="))
             {
                 vec.erase(vec.begin() + position);
                 vec[position].value = ">=";
-                vec[position].name = "GREATER EQUAL";
+                vec[position].name = GREATEREQUAL;
             }
             else if (!vec[position].value.compare("log") || !vec[position].value.compare("LOG"))
             {
@@ -122,7 +125,7 @@
             // No need to ignore whitespace since i got rid of it above    
             token = getToken(in[position]); // Get the token of the current position
             
-            if (token.name.compare("ILLEGAL") == 0)
+            if (token.name.compare(ILLEGAL) == 0)
             {
                 tokens.clear();
                 return tokens;
@@ -156,11 +159,11 @@
     {
         if (!str.compare("true"))
         {
-            return "TRUE";
+            return TRUE;
         }
         else if (!str.compare("false"))
         {
-            return "FALSE";
+            return FALSE;
         }
         
         int i = 0, x = str.size();
@@ -173,14 +176,14 @@
                 isFloat = true;
             
             else if (!isdigit(str[i]))
-                return "ILLEGAL";
+                return ILLEGAL;
             i++;
         }
 
         if (isFloat)
-            return "FLOATNUMBER";
+            return DECIMAL;
         else
-            return "INTEGER";
+            return INTEGER;
     }
 
     // Given a char, return the token it reprents.
@@ -194,81 +197,69 @@
         }
         else if (currentChar == '+')
         {
-            return Token {"PLUS", "+"};
+            return Token {PLUS, "+"};
         }
         else if (currentChar == '-')
         {
-            if (position + 1 < size && isdigit(line[position + 1]) && (position >= 1 || !isdigit(line[position - 1])))
+            if (position + 1 < size && isdigit(line[position + 1]) && (position == 0 || !isdigit(line[position - 1])))
                 // If it is the start of a negative number, the condition (position == 0) is in case the negative is the 
                     // first thing in the line
             {
                 return readNumber();
             }
-            return Token {"MINUS", "-"};
+            return Token {MINUS, "-"};
         }
         else if (currentChar == '*')
         {
-            return Token {"MULTIPLICATION", "*"};
+            return Token {MULTIPLICATION, "*"};
         }
         else if (currentChar == '/')
         {
-            return Token {"DIVISION", "/"};
+            return Token {DIVISION, "/"};
         }
         else if (currentChar == '^')
         {
-            return Token {"POWER", "^"};
+            return Token {POWER, "^"};
         }
         else if (currentChar == '(')
         {
-            return Token {"LPAREN", "("};
+            return Token {LPAREN, "("};
         }
         else if (currentChar == ')')
         {
-            return Token {"RPAREN", ")"};
+            return Token {RPAREN, ")"};
         }
         else if (currentChar == '[')
         {
-            return Token {"LSBRACE", "["};
+            return Token {LSBRACE, "["};
         }
         else if (currentChar == ']')
         {
-            return Token{"RSBRACE", "]"};
-        }
-        else if (currentChar == '{')
-        {
-            return Token {"LBRACE", "{"};
-        }
-        else if (currentChar == '}')
-        {
-            return Token {"RBRACE", "}"};
+            return Token{RSBRACE, "]"};
         }
         else if (currentChar == '=')
         {
-            return Token {"EQUAL", "="};
+            return Token {EQUAL, "="};
         }
         else if (currentChar == ',')
         {
-            return Token {"COMMA", ","};
-        }
-        else if (currentChar == '?')
-        {
-            return Token {"QUESTIONMARK", "?"};
+            return Token {COMMA, ","};
         }
         else if (currentChar == ':')
         {
-            return Token {"ASSIGN", ":"};
+            return Token {ASSIGN, ":"};
         }
         else if (currentChar == '<')
         {
-            return Token {"LESS THAN", "<"};
+            return Token {LESSTHAN, "<"};
         }
         else if (currentChar == '>')
         {
-            return Token {"GREATER THAN", ">"};
+            return Token {GREATERTHAN, ">"};
         }
         else if (currentChar == '!') // TODO: Implement this in the code
         {
-            return Token {"NEGATION", "!"};
+            return Token {NEGATION, "!"};
         }
 
         // std::string str = "";
@@ -276,5 +267,5 @@
 
         position = size; // End the line if Ilegal token
         std::string str = "";
-        return Token{"ILLEGAL", str.append(1, currentChar)}; // If is none of the above, it must be illegal
+        return Token{ILLEGAL, str.append(1, currentChar)}; // If is none of the above, it must be illegal
     }
