@@ -19,6 +19,7 @@ class Lexer {
         Token getToken(char currentChar);
 
     public:
+        std::string getTypeOfValue(std::string str);
         std::vector<Token> readLine(std::string in);
 };
 #endif

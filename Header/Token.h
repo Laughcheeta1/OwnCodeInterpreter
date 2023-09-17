@@ -3,6 +3,7 @@
 
 #include <string>
 
+// TODO: hacer todos los nombres de las cosas como true y false en const strings, por si despues los queremos cambiar
 /*
     The tokes:
         Numerical:
@@ -36,11 +37,12 @@
             WORD
             LPAREN : '('
             RPAREN : ')'
-
+            COMMA : ','
+        
         Other:
             ILLEGAL
-
 */
+
 struct Token {
     std::string name;
     std::string value;

@@ -1,5 +1,7 @@
 #include "../Header/Token.h"
 #include "../Header/ast.h"
+#include "../Header/parser.h"
+#include "../Header/lexer.h"
 
 using namespace std;
 
@@ -114,14 +116,39 @@ using namespace std;
         NodeAST* lastNode = NULL;
 
         while (currentIndex <= endingIndex)
-        {            
-            if (tokens[currentIndex].name.compare("NUMBER") == 0) // if is a number
+        {   
+            // TODO: finish when it is a parenthesis
+            if (tokens[currentIndex].name.compare("LPAREN") == 0)
+            {
+                int sIndex = currentIndex + 1;
+                while (tokens[currentIndex].name.compare("RPAREN")) // Find the index of the closing parenthesis
+                    currentIndex++;
+                
+                NodeAST* n = makeTree(tokens, currentIndex + 1, currentIndex - 1); // Get the tree inside the parenthesis
+                if (n == NULL) // Check for validity of the tree
+                    return NULL;
+
+                Parser p; // Variable we are using to evaluate
+                Lexer l;
+                std::string result = p.evaluateTree(n); // Get the result inside of parenthesis
+                std::string typeOfValue = l.getTypeOfValue(result);
+
+                if (!typeOfValue.compare("ILLEGAL")) // If result is valid
+                    return NULL;
+
+                Token t = Token {typeOfValue, result};
+
+                currentNode = new NodeAST(lastNode, NULL, NULL, t); // Make the token for the tree
+                if (lastNode != NULL)
+                    lastNode -> setRightChild(currentNode);
+
+            }
+            else if (tokens[currentIndex].name.compare("NUMBER") == 0) // if is a number
             {
                 currentNode = new NodeAST(lastNode, NULL, NULL, tokens[currentIndex]);
                 if (lastNode != NULL)
                     lastNode -> setRightChild(currentNode);
             } 
-            // TODO add when it is a parenthesis
             else // If not a number, must be an Operand
             {
                 currentNode = placeOperand(lastNode, tokens[currentIndex]);
