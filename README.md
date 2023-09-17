@@ -7,6 +7,7 @@
 
 ## Language Specifications
 - Math operands like: `+`, `-`, `*`, `/`, `()`, `^` (power) stands the same
+- Booleans are declared in upper case, like: `TRUE` and `FALSE`
 
 - declarar variables:
 ```
@@ -66,4 +67,3 @@
     ```
     *bdsm stands for Back Data Submision Mean*
 
-- to end a line instead of using `;` like in c++ or in java, you use `$`
