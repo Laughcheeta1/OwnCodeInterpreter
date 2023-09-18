@@ -12,7 +12,8 @@
     {
         std::string numberValue = "";
 
-        if (line[position] == '-' && (position == 0 || !isdigit(line[position - 1])))
+        if (line[position] == '-' && (position == 0 || !isdigit(line[position - 1]))
+            && line[position - 1] != ')')
         {
             numberValue += line[position];
             position++;
@@ -202,7 +203,8 @@
         }
         else if (currentChar == '-')
         {
-            if (position + 1 < size && isdigit(line[position + 1]) && (position == 0 || !isdigit(line[position - 1])))
+            if (position + 1 < size && isdigit(line[position + 1]) && (position == 0 || !isdigit(line[position - 1]))
+                && line[position - 1] != ')')
                 // If it is the start of a negative number, the condition (position == 0) is in case the negative is the 
                     // first thing in the line
             {

@@ -130,59 +130,76 @@ using namespace std;
                 return NULL;
             }
             else if (tokens[currentIndex].name.compare(NEGATION) == 0)
-            {
-                if (currentIndex + 1 < size) // There must be something behind the negation
+            {   
+                int numberOfNegation = 0;
+                while (currentIndex < size && tokens[currentIndex].name.compare(NEGATION) == 0)
                 {
-                    std::string result;
-                    if (tokens[currentIndex + 1].name.compare(LPAREN) == 0) // is is an expresion in parenthesis
-                    {
-                        currentIndex += 2; // By adding two, instead of one, we avoid making an extra recursion unnesesarily 
-                            // (because when finding a LPAREN it )
-                        NodeAST* n = makeTree(); // Get the tree inside the parenthesis
-                        if (n == NULL) // Check for validity of the tree
-                        {
-                            freeTree(getRoot(lastNode));
-                            return NULL;
-                        }
+                    currentIndex++;
+                    numberOfNegation++;
+                }
 
-                        result = Parser::evaluateTree(n);
-                        freeTree(n); // Free the tree after being evaluated
-                        result = Lexer::getTypeOfValue(result);
+                if (numberOfNegation == 0) // If there isn't something behind the negation
+                {
+                    freeTree(getRoot(lastNode));
+                    return NULL;
+                }
 
-                        if (result.compare(TRUE) == 0)
-                            result = FALSE;
-                        else if (result.compare(FALSE) == 0)
-                            result = TRUE;
-                        else // If none of the above, must be a non valid expression
-                        {
-                            freeTree(getRoot(lastNode));
-                            return NULL;
-                        }
-                    }
-                    else if (tokens[currentIndex + 1].name.compare(TRUE) == 0)
-                    {
-                        currentIndex ++;
-                        result = FALSE;
-                    }   
-                    else if (tokens[currentIndex + 1].name.compare(FALSE) == 0)
-                    {
-                        currentIndex ++;
-                        result = TRUE;
-                    }
-                    else // Theres an invalid thing behind the negation
+                std::string result;
+                if (tokens[currentIndex].name.compare(LPAREN) == 0) // is is an expresion in parenthesis
+                {
+                    currentIndex += 2; // By adding two, instead of one, we avoid making an extra recursion unnesesarily 
+                        // (because when finding a LPAREN it )
+                    NodeAST* n = makeTree(); // Get the tree inside the parenthesis
+                    if (n == NULL) // Check for validity of the tree
                     {
                         freeTree(getRoot(lastNode));
                         return NULL;
                     }
 
-                    Token t = Token {result, result}; // Make the base node
-                    currentNode = new NodeAST(lastNode, NULL, NULL, t);
+                    result = Parser::evaluateTree(n);
+                    freeTree(n); // Free the tree after being evaluated
+                    result = Lexer::getTypeOfValue(result);
+
+                    // if (numberOfNegation % 2 == 1)
+                    // {
+                    //     if (result.compare(TRUE) == 0)
+                    //     {
+                    //         result = FALSE;
+                    //     }
+                    //     else if (result.compare(FALSE) == 0)
+                    //     {
+                    //         result = TRUE;
+                    //     }
+                    // }
+                    // else // If none of the above, must be a non valid expression
+                    // {
+                    //     freeTree(getRoot(lastNode));
+                    //     return NULL;
+                    // }
                 }
-                else // If there isn't something behind the negation
+                else
+                {
+                    result = tokens[currentIndex].name;
+                }
+                
+                if (result.compare(TRUE) == 0)
+                {
+                    if (numberOfNegation % 2 == 1)
+                        result = FALSE;
+                }
+                else if (result.compare(FALSE) == 0)
+                {
+                    if (numberOfNegation % 2 == 1)
+                        result = TRUE;
+                }
+                else // Theres an invalid thing behind the negation
                 {
                     freeTree(getRoot(lastNode));
                     return NULL;
                 }
+
+                Token t = Token {result, result}; // Make the base node
+                currentNode = new NodeAST(lastNode, NULL, NULL, t);
             }
             else if (tokens[currentIndex].name.compare(LPAREN) == 0)
             {
