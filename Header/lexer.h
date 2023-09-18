@@ -18,6 +18,8 @@ class Lexer {
         void processLn(std::vector<Token> vec);
         void processRaiz(std::vector<Token> vec); 
         Token getToken(char currentChar); // Returns the token the char corresponds to
+        // TODO: identify strings
+        // TODO: I think every word needs to be asumed either a variable or a function, after that, check if it is valid or nah
 
     public:
         static std::string getTypeOfValue(std::string str); // Given a string, returns wheter it corresponds to a INTEGER, FLOATNUMBER or a bool

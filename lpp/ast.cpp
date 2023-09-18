@@ -49,6 +49,13 @@ using namespace std;
 
 
 // ast class
+    ast::ast(vector<Token> tok)
+    {
+        tokens = tok;
+        size = tok.size();
+        currentIndex = 0;
+    }
+
     int ast::getPriority(string token)
     {
         if (!token.compare(EQUAL) || !token.compare(LESSEREQUAL) || !token.compare(GREATEREQUAL) || !token.compare(LESSTHAN)
@@ -105,61 +112,33 @@ using namespace std;
         return result;
     }
 
-    // TODO: Parenthesis inside parenthesis do not work
-    int ast::getClosingParenIndex(std::vector<Token> tokens, int startingIndex, int maxIndex)
-    {
-        while (startingIndex <= maxIndex && tokens[startingIndex].name.compare(RPAREN))
-        {
-            startingIndex++;
-        }
-
-        return (startingIndex > maxIndex) ? -1 : startingIndex;
-    }
-
-    NodeAST* ast::makeTree(vector<Token> tokens)
-    {
-        return makeTree(tokens, 0, tokens.size() - 1);
-    }
-
     /* Starting index and ending index are intended for parenthesis, so we can deal with them*/
-    NodeAST* ast::makeTree(vector<Token> tokens, int currentIndex, int endingIndex)
-        // FIXME: make parenthesis inside parenthesis work, that can be achieved by ending the function when encountering an
-            // end parenthesis
-
+    NodeAST* ast::makeTree()
     {
         /* Remember that to free the memory from creating a class with "new", you use "delete *name of the pointer*"
         For more info check "https://stackoverflow.com/questions/4061514/c-object-created-with-new-destroyed-with-free-how-bad-is-this" */
         
-        NodeAST* currentNode; 
+        NodeAST* currentNode = NULL; 
         NodeAST* lastNode = NULL;
 
-        while (currentIndex <= endingIndex)
+        while (currentIndex < size && tokens[currentIndex].name.compare(RPAREN))
         {   
             if (tokens[currentIndex].name.compare(WORD) == 0)
             {
-                // TODO: could be a variable, bu for now, return NULL
+                // TODO: could be a variable, but for now, return NULL
                 freeTree(getRoot(lastNode));
                 return NULL;
             }
             else if (tokens[currentIndex].name.compare(NEGATION) == 0)
             {
-                if (currentIndex + 1 <= endingIndex) // There must be something behind the negation
+                if (currentIndex + 1 < size) // There must be something behind the negation
                 {
                     std::string result;
                     if (tokens[currentIndex + 1].name.compare(LPAREN) == 0) // is is an expresion in parenthesis
                     {
-                        // currentIndex + 2, since current index is the !, not the parenthesis
-                        int sIndex = currentIndex + 2, nIndex = getClosingParenIndex(tokens, sIndex, endingIndex);
-                        currentIndex = nIndex;
-                        
-                        if (nIndex == -1)
-                        {
-                            freeTree(getRoot(lastNode));
-                            return NULL;
-                        }
-
-                        NodeAST* n = makeTree(tokens, sIndex, nIndex - 1); 
-                            // Get the tree inside the parenthesis
+                        currentIndex += 2; // By adding two, instead of one, we avoid making an extra recursion unnesesarily 
+                            // (because when finding a LPAREN it )
+                        NodeAST* n = makeTree(); // Get the tree inside the parenthesis
                         if (n == NULL) // Check for validity of the tree
                         {
                             freeTree(getRoot(lastNode));
@@ -167,6 +146,7 @@ using namespace std;
                         }
 
                         result = Parser::evaluateTree(n);
+                        freeTree(n); // Free the tree after being evaluated
                         result = Lexer::getTypeOfValue(result);
 
                         if (result.compare(TRUE) == 0)
@@ -183,14 +163,12 @@ using namespace std;
                     {
                         currentIndex ++;
                         result = FALSE;
-                    }
-                    
+                    }   
                     else if (tokens[currentIndex + 1].name.compare(FALSE) == 0)
                     {
                         currentIndex ++;
                         result = TRUE;
                     }
-
                     else // Theres an invalid thing behind the negation
                     {
                         freeTree(getRoot(lastNode));
@@ -208,16 +186,8 @@ using namespace std;
             }
             else if (tokens[currentIndex].name.compare(LPAREN) == 0)
             {
-                int sIndex = currentIndex + 1, nIndex = getClosingParenIndex(tokens, sIndex, endingIndex);
-                currentIndex = nIndex;
-
-                if (nIndex == -1)
-                {
-                    freeTree(getRoot(lastNode));
-                    return NULL;
-                }
-                
-                NodeAST* n = makeTree(tokens, sIndex, nIndex - 1); 
+                currentIndex++; // Advance the index when entering the 
+                NodeAST* n = makeTree(); 
                     // Get the tree inside the parenthesis
                 if (n == NULL) // Check for validity of the tree
                 {
@@ -226,6 +196,7 @@ using namespace std;
                 }
 
                 std::string result = Parser::evaluateTree(n); // Get the result inside of parenthesis
+                freeTree(n); // Free the tree after being evaluated
                 std::string typeOfValue = Lexer::getTypeOfValue(result);
 
                 if (!typeOfValue.compare(ILLEGAL)) // If result is valid
@@ -241,14 +212,15 @@ using namespace std;
                     lastNode -> setRightChild(currentNode);
 
             }
-            else if (tokens[currentIndex].name.compare(INTEGER) == 0 || tokens[currentIndex].name.compare(DECIMAL) == 0) 
-                // if is a number
+            else if (tokens[currentIndex].name.compare(INTEGER) == 0 || tokens[currentIndex].name.compare(DECIMAL) == 0
+                || tokens[currentIndex].name.compare(TRUE) == 0 || tokens[currentIndex].name.compare(FALSE) == 0) 
+                // if is a number or boolean
             {
                 currentNode = new NodeAST(lastNode, NULL, NULL, tokens[currentIndex]);
                 if (lastNode != NULL)
                     lastNode -> setRightChild(currentNode);
             } 
-            else // If not a number, must be an Operand
+            else // If not a number or boolean, must be an Operand
             {
                 currentNode = placeOperand(lastNode, tokens[currentIndex]);
             }
@@ -258,6 +230,13 @@ using namespace std;
         }
 
         return getRoot(currentNode);
+    }
+
+    NodeAST* ast::makeTree(std::vector<Token> tok) // This is intended to initialize the recursive function
+        // this is so the other classes does not need to deal with setting the currentIndex to 0 again when calling the function.
+    {
+        ast a(tok);
+        return a.makeTree();
     }
 
     // Frees up the tree in a inorder manner

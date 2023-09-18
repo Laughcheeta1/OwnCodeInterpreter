@@ -70,7 +70,7 @@
     std::vector<Token> Lexer::processResult(std::vector<Token> vec) // TODO finish the method
     {
         position = 0;
-        while (position < vec.size())
+        while (position < (int)vec.size())
         {
             if (!vec[position].value.compare("<") && !vec[position + 1].value.compare("="))
             {
