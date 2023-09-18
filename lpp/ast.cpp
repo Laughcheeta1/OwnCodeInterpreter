@@ -138,7 +138,7 @@ using namespace std;
                     numberOfNegation++;
                 }
 
-                if (numberOfNegation == 0) // If there isn't something behind the negation
+                if (currentIndex == size) // If there isn't something behind the negation
                 {
                     freeTree(getRoot(lastNode));
                     return NULL;
@@ -159,23 +159,6 @@ using namespace std;
                     result = Parser::evaluateTree(n);
                     freeTree(n); // Free the tree after being evaluated
                     result = Lexer::getTypeOfValue(result);
-
-                    // if (numberOfNegation % 2 == 1)
-                    // {
-                    //     if (result.compare(TRUE) == 0)
-                    //     {
-                    //         result = FALSE;
-                    //     }
-                    //     else if (result.compare(FALSE) == 0)
-                    //     {
-                    //         result = TRUE;
-                    //     }
-                    // }
-                    // else // If none of the above, must be a non valid expression
-                    // {
-                    //     freeTree(getRoot(lastNode));
-                    //     return NULL;
-                    // }
                 }
                 else
                 {
