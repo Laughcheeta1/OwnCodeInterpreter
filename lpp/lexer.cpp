@@ -44,19 +44,24 @@
         while (position < size && std::isalpha(line[position]))
         {
             word.append(1, line[position]);
+
+            if (!word.compare(FUNCTION))
+            {
+                return Token {FUNCTION, FUNCTION};
+            }
+            else if (!word.compare(IF))
+            {
+                return Token {IF, IF};
+            }
+            else if (!word.compare(VAR))
+            {
+                return Token {VAR, VAR};
+            }
+
             position++;
         }
 
-        position --; // So the position ends up pointing to the last char read
-
-        if (!word.compare(FUNCTION))
-        {
-            return Token {FUNCTION, FUNCTION};
-        }
-        else if (!word.compare(IF))
-        {
-            return Token {IF, IF};
-        }
+        position --; // So the position ends up pointing to the last char read 
 
         return Token {WORD, word};
     }
@@ -88,7 +93,7 @@
         while (++position < size)
         {
             // No need to ignore whitespace since i got rid of it above    
-            token = getToken(in[position]); // Get the token of the current position
+            token = getToken(line[position]); // Get the token of the current position
             
             if (token.name.compare(ILLEGAL) == 0)
             {
@@ -221,18 +226,61 @@
             return Token {NEGATION, "!"};
         }
 
-        // std::string str = "";
-        // throw IllegalToken(str.append(1, currentChar));
-
         position = size; // End the line if Ilegal token
         std::string str = "";
         return Token{ILLEGAL, str.append(1, currentChar)}; // If is none of the above, it must be illegal
     }
 
 
-    void Lexer::processFunction()
+    void Lexer::processFunction() 
     {
         // TODO: finish process function
+
+        position ++; // When comming from the readLine(), the position still 0
+
+        token = getToken(line[position]);
+        if (token.name.compare(WORD)) // If after milf does not come the function name, it's an error
+        {
+            tokens.clear();
+            return;
+        }
+        tokens.push_back(token); // Add the function name
+        position ++; // Add after, because else it will mess up with the other functions, as the position
+            // is shared beetween them, this because when reading a word, you are not reading the whole 
+            // word at a time, you read character by character, so messing with the position before time,
+            // messes up the reading of this words
+
+        token = getToken(line[position]);
+        if (token.name.compare(LPAREN)) // if after the name does to come arguments, then is wrong
+        {
+            tokens.clear();
+            return;
+        }
+        tokens.push_back(token);
+        position ++;
+
+        while (position < size && token.name.compare(RPAREN))
+        {
+            token = getToken(line[position]);
+            tokens.push_back(token);
+            position ++;
+        }
+
+        bool start = false; // Whether a '[' has been reached or not
+        bool close = false; // Whether a ']' has been reached or not
+        while (std::getline(std::cin, line))
+        {
+            line = stripWhiteSpace(line);
+            size = line.size();
+            position = -1;
+
+            while (++position < size)
+            {
+                token = getToken(line[position]);
+
+
+            }
+        }
     }
 
 

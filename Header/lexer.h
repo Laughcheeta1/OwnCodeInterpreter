@@ -18,7 +18,9 @@ class Lexer {
         void processRaiz(); 
         Token getToken(char currentChar); // Returns the token the char corresponds to
 
-        void processFunction();
+        void processVariable();
+        void processFunction(); // Create the vector for a function, does not
+            // check if the arguments or the inside code is valid, only gets the function
         void processIf();
 
         // TODO: identify strings

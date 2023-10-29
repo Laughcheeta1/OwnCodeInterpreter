@@ -51,6 +51,8 @@
     ```
     *milf stands for Man I Love Functions*
 
+    It strictly has to be defined this way
+
 - print:
     ```
     pilla ()
