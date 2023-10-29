@@ -5,7 +5,6 @@
 #include <iterator>
 #include "../Header/Token.h"
 #include "../Header/lexer.h"
-#include "../Header/exceptions.h"
 
     // When detecting a numerical char, there can be more digits to the number following it, so we read until we have a space, to grab the whole number
     Token Lexer::readNumber() 
@@ -25,7 +24,6 @@
             {
                 if (isFloat)
                     return Token {ILLEGAL, numberValue += '.'};
-                    //throw IllegalToken(numberValue += '.');
                 else
                     isFloat = true;
             }
@@ -50,6 +48,15 @@
         }
 
         position --; // So the position ends up pointing to the last char read
+
+        if (!word.compare(FUNCTION))
+        {
+            return Token {FUNCTION, FUNCTION};
+        }
+        else if (!word.compare(IF))
+        {
+            return Token {IF, IF};
+        }
 
         return Token {WORD, word};
     }
@@ -76,7 +83,7 @@
         position = -1;
         size = in.size();
         line = in;
-        std::vector<Token> tokens;
+        tokens.clear();
 
         while (++position < size)
         {
@@ -90,27 +97,20 @@
             }
 
             tokens.push_back(token);
+
+            if (!token.name.compare(FUNCTION))
+            {
+                processFunction();
+                break;
+            }
+            else if (!token.name.compare(IF))
+            {
+                processIf();
+                break;
+            }
         }
 
         return tokens;
-    }
-    
-    void Lexer::processLog(std::vector<Token> vec)
-    {
-        // TODO: finish this
-        // leave the LOG in the form "log(number1, number2)"
-    }
-
-    void Lexer::processLn(std::vector<Token> vec)
-    {
-        // TODO: finish this
-        // leave the LN in the form "ln(number1)"
-    }
-
-    void Lexer::processRaiz(std::vector<Token> vec)
-    {
-        // TODO: finish this
-        // leave the RAIZ in the form "raiz(number1, number2)"
     }
 
     std::string Lexer::getTypeOfValue(std::string str) // Returns the type of variable that is the string
@@ -227,4 +227,16 @@
         position = size; // End the line if Ilegal token
         std::string str = "";
         return Token{ILLEGAL, str.append(1, currentChar)}; // If is none of the above, it must be illegal
+    }
+
+
+    void Lexer::processFunction()
+    {
+        // TODO: finish process function
+    }
+
+
+    void Lexer::processIf()
+    {
+        // TODO: finish process if
     }

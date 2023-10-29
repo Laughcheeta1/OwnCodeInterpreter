@@ -9,13 +9,18 @@ class Lexer {
         std::string line;
         long size;
         long position;
+        std::vector<Token> tokens;
         Token readNumber(); // Reads a complete number, and determines wheter it is a float or integer, positive or negative
         Token readWords(); // Reads a word
         std::string stripWhiteSpace(std::string line); // Clear the input string from all white space
-        void processLog(std::vector<Token> vec);
-        void processLn(std::vector<Token> vec);
-        void processRaiz(std::vector<Token> vec); 
+        void processLog();
+        void processLn();
+        void processRaiz(); 
         Token getToken(char currentChar); // Returns the token the char corresponds to
+
+        void processFunction();
+        void processIf();
+
         // TODO: identify strings
         // TODO: I think every word needs to be asumed either a variable or a function, after that, check if it is valid or nah
 
