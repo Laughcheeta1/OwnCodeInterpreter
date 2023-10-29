@@ -14,6 +14,8 @@ int main()
     {
         std::vector<Token> v = lexer.readLine(input);
         
+        // TODO: Use the evaluator class
+        
         // NodeAST* n = ast::makeTree(v);
 
         // std::cout << "The result is: " << Parser::evaluateTree(n) << std::endl;
@@ -43,7 +45,14 @@ int main()
 
 // eParce ()
 // [
+    // x + 1 
+    
+    // y -3
 
+    // z * 4
 // ]
 
+// eParce, (, ... expresion ..., ), [, x, +, 1, \n, y, -, 3, \n, z, *, 4, ] 
+
 // createIf()
+

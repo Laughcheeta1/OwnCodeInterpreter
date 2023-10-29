@@ -8,6 +8,7 @@
     const std::string VARIABLENAME = "VARIABLENAME";
     const std::string FUNCTION = "milf";
     const std::string IF = "eParce";
+    const std::string NEWLINE = "NEWLINE";
 
 // Numerical:
     const std::string INTEGER = "INTEGER";

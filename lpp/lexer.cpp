@@ -268,7 +268,7 @@
 
         bool start = false; // Whether a '[' has been reached or not
         bool close = false; // Whether a ']' has been reached or not
-        while (std::getline(std::cin, line))
+        while (!close && std::getline(std::cin, line))
         {
             line = stripWhiteSpace(line);
             size = line.size();
@@ -277,8 +277,14 @@
             while (++position < size)
             {
                 token = getToken(line[position]);
-
-
+                if (!token.name.compare(LSBRACE))
+                {
+                    start = true; // We have found the starting brace
+                }
+                else if (!token.name.compare(RSBRACE))
+                {
+                    close = true;
+                }
             }
         }
     }
