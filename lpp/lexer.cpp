@@ -68,50 +68,6 @@
         return result;
     }
 
-    std::vector<Token> Lexer::processResult(std::vector<Token> vec) // TODO finish the method
-    {
-        position = 0;
-        while (position < (int)vec.size())
-        {
-            if (!vec[position].value.compare("<") && !vec[position + 1].value.compare("="))
-            {
-                vec.erase(vec.begin() + position);
-                vec[position].value = "<=";
-                vec[position].name = LESSEREQUAL;
-            }
-            else if (!vec[position].value.compare(">") && !vec[position + 1].value.compare("="))
-            {
-                vec.erase(vec.begin() + position);
-                vec[position].value = ">=";
-                vec[position].name = GREATEREQUAL;
-            }
-            else if (!vec[position].value.compare("log") || !vec[position].value.compare("LOG"))
-            {
-                processLog(vec);
-            }
-            else if (!vec[position].value.compare("ln") || !vec[position].value.compare("LN"))
-            {
-                processLn(vec);
-            }
-            else if (!vec[position].value.compare("raiz") || !vec[position].value.compare("RAIZ"))
-            {
-                processRaiz(vec);
-            }
-            else if (!vec[position].value.compare(TRUE))
-            {
-                vec[position].name = TRUE;
-            }
-            else if (!vec[position].value.compare(FALSE))
-            {
-                vec[position].name = FALSE;
-            }
-
-            position++;
-        }
-
-        return vec;
-    }
-
     std::vector<Token> Lexer::readLine(std::string in) // If encounter Illegal expression, return unitary expression with Illegal Token
     {
         // Initialize the necessary variables
@@ -136,7 +92,7 @@
             tokens.push_back(token);
         }
 
-        return processResult(tokens);
+        return tokens;
     }
     
     void Lexer::processLog(std::vector<Token> vec)

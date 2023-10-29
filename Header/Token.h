@@ -3,6 +3,12 @@
 
 #include <string>
 
+// Language
+    const std::string VAR = "var";
+    const std::string VARIABLENAME = "VARIABLENAME";
+    const std::string FUNCTION = "milf";
+    const std::string IF = "eParce";
+
 // Numerical:
     const std::string INTEGER = "INTEGER";
     const std::string DECIMAL = "FLOATNUMBER";
@@ -29,15 +35,16 @@
     const std::string ASSIGN = "ASSIGN"; // :
 
 // Text
-    const std::string WORD = "WORD";
+    const std::string STRING = "STRING";
     const std::string LPAREN = "LPAREN"; // (
     const std::string RPAREN = "RPAREN"; // )
     const std::string COMMA = "COMMA"; // ,
-    const std::string LSBRACE = "LSBRACE";
-    const std::string RSBRACE = "RSBRACE";
+    const std::string LSBRACE = "LSBRACE"; // [
+    const std::string RSBRACE = "RSBRACE"; // ]
 
 // Other
     const std::string ILLEGAL = "ILLEGAL";
+    const std::string WORD = "WORD";
 
 struct Token {
     std::string name;

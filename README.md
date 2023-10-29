@@ -11,7 +11,7 @@
 
 - declarar variables:
 ```
-    nombre variable : valor variable
+    VAR nombre_variable : valor variable
 ```
     
 
