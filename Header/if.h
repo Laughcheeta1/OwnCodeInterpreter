@@ -14,7 +14,7 @@ class If
 
 
  public:
-    void evaluateIf(std::vector<Token> a, Environment env);
+    static void evaluateIf(std::vector<Token> a, Environment env);
 
 };
 

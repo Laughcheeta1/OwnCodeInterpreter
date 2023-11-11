@@ -49,9 +49,9 @@
             {
                 return Token {FUNCTION, FUNCTION};
             }
-            else if (!word.compare(IF))
+            else if (!word.compare(IFEXPRESSION))
             {
-                return Token {IF, IF};
+                return Token {IFEXPRESSION, IFEXPRESSION};
             }
             else if (!word.compare(VAR))
             {
@@ -112,7 +112,7 @@
                 processFunction();
                 break;
             }
-            else if (!token.name.compare(IF))
+            else if (!token.name.compare(IFEXPRESSION))
             {
                 processIf();
                 break;
@@ -341,7 +341,7 @@
             while (++position < size)
             {
                 token = getToken(line[position]);
-                if (!token.name.compare(LSBRACE) && token.name.compare(ILLEGAL))
+                if (!token.name.compare(LSBRACE))
                 {
                     start = true; // We have found the starting brace
                     tokens.push_back(token);
@@ -351,6 +351,10 @@
                     if (!token.name.compare(RSBRACE))
                     {
                         close = true;
+                    }
+                    else if (!token.name.compare(IFEXPRESSION))
+                    {
+                        processIf();
                     }
 
                     tokens.push_back(token);

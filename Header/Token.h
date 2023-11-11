@@ -8,7 +8,7 @@
     const std::string RETURN = "bdsm";
     const std::string VARIABLENAME = "VARIABLENAME";
     const std::string FUNCTION = "milf";
-    const std::string IF = "eParce";
+    const std::string IFEXPRESSION = "eParce";
     const std::string NEWLINE = "NEWLINE";
 
 // Numerical:
