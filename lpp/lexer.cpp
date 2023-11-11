@@ -57,6 +57,10 @@
             {
                 return Token {VAR, VAR};
             }
+            else if (!word.compare(RETURN))
+            {
+                return Token {RETURN, RETURN};
+            }
 
             position++;
         }
@@ -234,8 +238,6 @@
 
     void Lexer::processFunction() 
     {
-        // TODO: finish process function
-
         position ++; // When comming from the readLine(), the position still 0
 
         token = getToken(line[position]);
@@ -259,6 +261,7 @@
         tokens.push_back(token);
         position ++;
 
+        // Get all the arguments for the function
         while (position < size && token.name.compare(RPAREN))
         {
             token = getToken(line[position]);
@@ -266,6 +269,7 @@
             position ++;
         }
 
+        std::cout << "----";
         bool start = false; // Whether a '[' has been reached or not
         bool close = false; // Whether a ']' has been reached or not
         while (!close && std::getline(std::cin, line))
@@ -277,20 +281,90 @@
             while (++position < size)
             {
                 token = getToken(line[position]);
-                if (!token.name.compare(LSBRACE))
+                if (!token.name.compare(LSBRACE) && token.name.compare(ILLEGAL))
                 {
                     start = true; // We have found the starting brace
+                    tokens.push_back(token);
                 }
-                else if (!token.name.compare(RSBRACE))
+                else if (start && token.name.compare(ILLEGAL)) // Check that we have encountered a '[' before adding anything else
                 {
-                    close = true;
+                    if (!token.name.compare(RSBRACE))
+                    {
+                        close = true;
+                    }
+
+                    tokens.push_back(token);
+                }
+                else // If we have not encountered a '[' or a token is illegal there is an error
+                {
+                    tokens.clear();
+                    return;
                 }
             }
+
+            if (!close) // Print the sign at the end of the line, meaninig that the function is processing
+                std::cout << "----";
         }
     }
 
 
-    void Lexer::processIf()
+    void Lexer::processIf() // The processIf is basically the same as the processFunction, but excluding the name
     {
         // TODO: finish process if
+
+        position ++; // When comming from the readLine(), the position still 0
+
+        token = getToken(line[position]);
+        if (token.name.compare(LPAREN)) // if it does not have arguments, then is wrong
+        {
+            tokens.clear();
+            return;
+        }
+        tokens.push_back(token);
+        position ++;
+
+        // Get all the arguments
+        while (position < size && token.name.compare(RPAREN))
+        {
+            token = getToken(line[position]);
+            tokens.push_back(token);
+            position ++;
+        }
+
+        std::cout << "----";
+        bool start = false; // Whether a '[' has been reached or not
+        bool close = false; // Whether a ']' has been reached or not
+        while (!close && std::getline(std::cin, line))
+        {
+            line = stripWhiteSpace(line);
+            size = line.size();
+            position = -1;
+
+            while (++position < size)
+            {
+                token = getToken(line[position]);
+                if (!token.name.compare(LSBRACE) && token.name.compare(ILLEGAL))
+                {
+                    start = true; // We have found the starting brace
+                    tokens.push_back(token);
+                }
+                else if (start && token.name.compare(ILLEGAL)) // Check that we have encountered a '[' before adding anything else
+                {
+                    if (!token.name.compare(RSBRACE))
+                    {
+                        close = true;
+                    }
+
+                    tokens.push_back(token);
+                }
+                else // If we have not encountered a '[' or a token is illegal there is an error
+                {
+                    tokens.clear();
+                    return;
+                }
+            }
+
+            if (!close) // Print the sign at the end of the line, meaninig that the if is processing
+                std::cout << "----";
+        }
     }

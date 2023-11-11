@@ -51,7 +51,7 @@
     ```
     *milf stands for Man I Love Functions*
 
-    It strictly has to be defined this way
+    It strictly has to be defined this way (We are personally aprehensive to any other way of declaring variables >:| )
 
 - print:
     ```

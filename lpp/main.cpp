@@ -19,7 +19,8 @@ int main()
         // NodeAST* n = ast::makeTree(v);
 
         // std::cout << "The result is: " << Parser::evaluateTree(n) << std::endl;
-        // std::cout << "\nc-- >>> ";
+
+        std::cout << "\nc-- >>> ";
 
         // ast::freeTree(n);
     }
