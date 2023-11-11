@@ -119,7 +119,7 @@
             }
         }
 
-        return tokens;
+        return purifyTokens();
     }
 
     std::string Lexer::getTypeOfValue(std::string str) // Returns the type of variable that is the string
@@ -235,7 +235,6 @@
         return Token{ILLEGAL, str.append(1, currentChar)}; // If is none of the above, it must be illegal
     }
 
-
     void Lexer::processFunction() 
     {
         position ++; // When comming from the readLine(), the position still 0
@@ -307,7 +306,6 @@
         }
     }
 
-
     void Lexer::processIf() // The processIf is basically the same as the processFunction, but excluding the name
     {
         // TODO: finish process if
@@ -368,3 +366,47 @@
                 std::cout << "----";
         }
     }
+
+std::vector<Token> Lexer::purifyTokens()
+{
+    position = 0;
+    while (position < (int)tokens.size())
+    {
+        if (!tokens[position].value.compare("<") && position + 1 < (int)tokens.size() && !tokens[position + 1].value.compare("="))
+        {
+            tokens.erase(tokens.begin() + position);
+            tokens[position].value = "<=";
+            tokens[position].name = LESSEREQUAL;
+        }
+        else if (!tokens[position].value.compare(">") && position + 1 < (int)tokens.size() && !tokens[position + 1].value.compare("="))
+        {
+            tokens.erase(tokens.begin() + position);
+            tokens[position].value = ">=";
+            tokens[position].name = GREATEREQUAL;
+        }
+        else if (!tokens[position].value.compare("log") || !tokens[position].value.compare("LOG"))
+        {
+            // processLog(tokens);
+        }
+        else if (!tokens[position].value.compare("ln") || !tokens[position].value.compare("LN"))
+        {
+            // processLn(tokens);
+        }
+        else if (!tokens[position].value.compare("raiz") || !tokens[position].value.compare("RAIZ"))
+        {
+            // processRaiz(tokens);
+        }
+        else if (!tokens[position].value.compare(TRUE))
+        {
+            tokens[position].name = TRUE;
+        }
+        else if (!tokens[position].value.compare(FALSE))
+        {
+            tokens[position].name = FALSE;
+        }
+
+        position++;
+    }
+
+    return tokens;
+}

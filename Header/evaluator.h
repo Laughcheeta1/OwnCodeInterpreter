@@ -15,9 +15,6 @@ class Evaluator
         std::vector<Token> evaluateFunction();
         std::vector<Token> evaluateIf();
 
-        /// @brief Convert complex tokens (Tokens made by more than one token) into a single tokens
-        /// @return the purified tokens
-        std::vector<Token> purifyTokens();
         void evaluateExpression(); // TODO: Still have to make this function
         
     public:

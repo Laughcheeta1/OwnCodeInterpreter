@@ -3,8 +3,6 @@
 #include "Token.h"
 #include <vector>
 
-
-
 /// @brief This class is intended for converting a string of code, into tokens, that then will be processed by the evaluator class
 class Lexer {
     private:
@@ -46,6 +44,10 @@ class Lexer {
 
         /// @brief Create the token vector for a if, does not check the validity of the inside code
         void processIf();
+
+        /// @brief Convert complex tokens (Tokens made by more than one token) into a single tokens
+        /// @return the purified tokens
+        std::vector<Token> purifyTokens();
 
         // TODO: identify strings
         // TODO: I think every word needs to be asumed either a variable or a function, after that, check if it is valid or nah
