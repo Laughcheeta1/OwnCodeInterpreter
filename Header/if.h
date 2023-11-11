@@ -4,6 +4,7 @@
 #include "Token.h"
 #include "lexer.h"
 #include "parser.h"
+#include "environment.h"
 #include <vector>
 
 class If 
@@ -13,8 +14,7 @@ class If
 
 
  public:
-
- void evaluateIf(std::vector<Token> a);
+    void evaluateIf(std::vector<Token> a, Environment env);
 
 };
 
