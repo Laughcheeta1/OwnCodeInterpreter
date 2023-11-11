@@ -1,28 +1,11 @@
 #include "../Header/evaluator.h"
 
-std::vector<Token> Evaluator::evaluate(std::vector<Token> input)
-{
-    Evaluator e;
-    e.processTokens();
-    e.vec = input;
-}
-
-std::vector<Token> Evaluator::processTokens() // TODO finish the method
+std::vector<Token> Evaluator::purifyTokens()
 {
     position = 0;
     while (position < (int)vec.size())
     {
-        if (!vec[position].name.compare(VAR))
-        {
-            position ++;
-            return evaluateFunction();
-        }
-        if (!vec[position].name.compare(FUNCTION))
-        {
-            position ++;
-            return evaluateIf();
-        }
-        else if (!vec[position].value.compare("<") && position + 1 < (int)vec.size() && !vec[position + 1].value.compare("="))
+        if (!vec[position].value.compare("<") && position + 1 < (int)vec.size() && !vec[position + 1].value.compare("="))
         {
             vec.erase(vec.begin() + position);
             vec[position].value = "<=";
@@ -61,22 +44,32 @@ std::vector<Token> Evaluator::processTokens() // TODO finish the method
     return vec;
 }
 
+std::vector<Token> Evaluator::evaluate(std::vector<Token> input, Environment env)
+{
+    Evaluator e(input, env);
+    e.purifyTokens();
+    e.evaluateExpression();
+}
+
+Evaluator::Evaluator(std::vector<Token> vector, Environment environment)
+{
+    vec = vector;
+    size = vector.size();
+    position = 0;
+    env = environment;
+}
+
+void Evaluator::evaluateExpression()
+{
+
+}
+
 std::vector<Token> Evaluator::evaluateFunction()
 {
-    if (!(position < (int)vec.size() && position == 1 && !vec[position].name.compare(WORD)))
-    {
-        printf("Illegal expresion, VAR must be the first thing in the line\n");
-        vec.clear();
-        return vec;
-    }
+    
 }
 
 std::vector<Token> Evaluator::evaluateIf()
 {
-    if (!(position == 0 && position + 1 < (int)vec.size() && !vec[position + 1].value.compare(WORD)))
-    {
-        printf("Illegal expresion, MILF statement used incorrectly\n");
-        vec.clear();
-        return vec;
-    }
+    
 }

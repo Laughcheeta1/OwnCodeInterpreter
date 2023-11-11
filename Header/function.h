@@ -11,7 +11,7 @@ class Function
     public:
         /// @brief Constructor of the function class
         /// @param function the array of tokens containing the funcion in question
-        Function(std::vector<Token> function);
+        explicit Function(std::vector<Token> function);
 
         /// @brief runs this function
         /// @param arguments the arguments the function should recieve
