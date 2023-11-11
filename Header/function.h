@@ -7,6 +7,6 @@ class Function
         
     public:
 
-}
+};
 
 #endif

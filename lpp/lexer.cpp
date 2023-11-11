@@ -239,16 +239,16 @@
         position ++; // When comming from the readLine(), the position still 0
 
         token = getToken(line[position]);
-        if (token.name.compare(WORD)) // If after milf does not come the function name, it's an error
+        if (token.name.compare(WORD)) // If after 'milf' does not come the function name, it's an error
         {
             tokens.clear();
             return;
         }
         tokens.push_back(token); // Add the function name
-        position ++; // Add after, because else it will mess up with the other functions, as the position
-            // is shared beetween them, this because when reading a word, you are not reading the whole 
-            // word at a time, you read character by character, so messing with the position before time,
-            // messes up the reading of this words
+        position ++; /* Add after, because else it will mess up with the other functions, as the position
+            is shared beetween them, this because when reading a word, you are not reading the whole 
+            word at a time, you read character by character, so messing with the position before time,
+            messes up the reading of this words */
 
         token = getToken(line[position]);
         if (token.name.compare(LPAREN)) // if after the name does to come arguments, then is wrong

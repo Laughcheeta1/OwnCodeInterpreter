@@ -3,24 +3,48 @@
 #include "Token.h"
 #include <vector>
 
+
+
+/// @brief This class is intended for converting a string of code, into tokens, that then will be processed by the evaluator class
 class Lexer {
     private:
+        // Global variables intended for the functioning of the class
         Token token;
         std::string line;
         long size;
         long position;
         std::vector<Token> tokens;
-        Token readNumber(); // Reads a complete number, and determines wheter it is a float or integer, positive or negative
-        Token readWords(); // Reads a word
-        std::string stripWhiteSpace(std::string line); // Clear the input string from all white space
-        void processLog();
-        void processLn();
-        void processRaiz(); 
-        Token getToken(char currentChar); // Returns the token the char corresponds to
+
+
+        /// @brief Reads a complete number, and determines wheter it is a float or integer, positive or negative
+        /// @return a token corresponding to the number in question
+        Token readNumber();
+
+        /// @brief Reads a word
+        /// @return a token corresponding to a word
+        Token readWords();
+
+
+        /// @brief Clear the input string from all white space
+        /// @param line the input string
+        /// @return the line string without any white space
+        std::string stripWhiteSpace(std::string line);
+
+        // void processLog();
+        // void processLn();
+        // void processRaiz(); 
+
+        /// @brief Get the token a char/word/number corresponds to
+        /// @param currentChar 
+        /// @return token in question
+        Token getToken(char currentChar);
 
         void processVariable();
-        void processFunction(); // Create the vector for a function, does not
-            // check if the arguments or the inside code is valid, only gets the function
+
+        /// @brief Create the vector for a function, does not check if the arguments or the inside code is valid, only gets the function
+        void processFunction();
+
+        /// @brief Create the token vector for a if, does not check the validity of the inside code
         void processIf();
 
         // TODO: identify strings
