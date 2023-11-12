@@ -32,7 +32,7 @@ void IfExpression::evaluateIfExpression(std::vector<Token> a, Environment* env){
         i = i + 2;
 
         while(i < (int)a.size() && a[i].name.compare(RSBRACE) != 0){
-            if (a[i].name.compare(NEWLINE) == 0 && a[i-1].name.compare(LSBRACE) == 0){
+            if ((a[i].name.compare(NEWLINE) == 0 && a[i-1].name.compare(LSBRACE) == 0)||(a[i].name.compare(NEWLINE)== 0 && a[i-1].name.compare(NEWLINE)==0)){
                 i = i + 1;
             }
             if (a[i].name.compare(IFEXPRESSION) == 0){
