@@ -44,7 +44,7 @@ std::string Parser::evaluateTree(NodeAST* node){
     } if((left.compare(WORD) != 0 && right.compare(WORD) == 0)||
         (left.compare(WORD) == 0 && right.compare(WORD) != 0)) {
         return ILLEGAL;
-    } else if(left.compare(WORD) == 0 && right.compare(WORD) == 0){
+    } else if(left.compare(WORD) == 0 && right.compare(WORD) == 0 && node->getValue().value.compare("+")== 0){
         std:: string c = left.append(right);
         return c;
     }  
