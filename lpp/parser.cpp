@@ -8,6 +8,7 @@
 #include "../Header/lexer.h"
 #include "../Header/ast.h"
 #include "../Header/parser.h"
+#include "../Header/evaluator.h"
 
 
 std::string Parser::evaluateTree(NodeAST* node){
@@ -41,10 +42,14 @@ std::string Parser::evaluateTree(NodeAST* node){
     } else if ((left.compare(TRUE) == 0 || left.compare(FALSE)==0) && 
     (!(right.compare(TRUE)== 0) || !(right.compare(FALSE)==0))){
         return ILLEGAL;
-    } if((left.compare(WORD) != 0 && right.compare(WORD) == 0)||
-        (left.compare(WORD) == 0 && right.compare(WORD) != 0)) {
+    } if((Evaluator::getTypeOfVariable(left).compare(WORD) != 0 && Evaluator::getTypeOfVariable(right).compare(WORD) == 0)||
+        (Evaluator::getTypeOfVariable(left).compare(WORD) == 0 && Evaluator::getTypeOfVariable(right).compare(WORD) != 0)) {
         return ILLEGAL;
-    } else if(left.compare(WORD) == 0 && right.compare(WORD) == 0 && node->getValue().value.compare("+")== 0){
+    } else if(Evaluator::getTypeOfVariable(left).compare(WORD) == 0 && Evaluator::getTypeOfVariable(right).compare(WORD) == 0){
+        //TODO: the problem is here
+        if (node->getValue().name.compare(PLUS) != 0)
+            return ILLEGAL;
+
         std:: string c = left.append(right);
         return c;
     }  
