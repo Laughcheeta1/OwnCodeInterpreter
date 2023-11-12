@@ -49,9 +49,18 @@ std::string Parser::evaluateTree(NodeAST* node){
         double b = stod(right);
         
         if (node->getValue().value.compare("+") == 0){
+            if((left.compare(STRING) != 0 && right.compare(STRING) == 0)||
+            (left.compare(STRING) == 0 && right.compare(STRING) != 0)) {
+                return ILLEGAL;
+            } else if(left.compare(STRING) == 0 && right.compare(STRING) == 0){
+            std:: string c = left.append(right);
+                return c;
+            } else {
                 std:: string c = std::to_string(a+b);
                 return c;
+            }
         }
+                
         else if (node->getValue().value.compare("-") == 0){
                 std:: string c = std::to_string(a-b);
                 return c;
