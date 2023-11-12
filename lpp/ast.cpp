@@ -72,7 +72,7 @@ using namespace std;
         else if (!token.compare(POWER) || !token.compare(ROOT) || !token.compare(LOG) || !token.compare(LN)) 
             return 3;
 
-        else // Must be a number, and numbers have the higher priority
+        else // Must be a number or word, and numbers have the higher priority
             return 4;
     }
 
@@ -207,8 +207,9 @@ using namespace std;
 
             }
             else if (tokens[currentIndex].name.compare(INTEGER) == 0 || tokens[currentIndex].name.compare(DECIMAL) == 0
-                || tokens[currentIndex].name.compare(TRUE) == 0 || tokens[currentIndex].name.compare(FALSE) == 0) 
-                // if is a number or boolean
+                || tokens[currentIndex].name.compare(TRUE) == 0 || tokens[currentIndex].name.compare(FALSE) == 0
+                || tokens[currentIndex].name.compare(WORD) == 0) 
+                // if is a number, boolean or a word
             {
                 currentNode = new NodeAST(lastNode, NULL, NULL, tokens[currentIndex]);
                 if (lastNode != NULL)

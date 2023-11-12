@@ -352,14 +352,18 @@
                 {
                     if (!token.name.compare(RSBRACE))
                     {
+                        tokens.push_back(token);
                         close = true;
                     }
                     else if (!token.name.compare(IFEXPRESSION))
                     {
+                        tokens.push_back(token);
                         processIf();
                     }
-
-                    tokens.push_back(token);
+                    else
+                    {
+                        tokens.push_back(token);
+                    }
                 }
                 else // If we have not encountered a '[' or a token is illegal there is an error
                 {

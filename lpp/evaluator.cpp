@@ -59,27 +59,24 @@ std::string Evaluator::evaluateRegularExpression()
     std::vector<Token> newExpression;
     for (int i = 0; i < x; i++)
     {
-        if (!vec[i].name.compare(WORD))
+        if (env -> variables.count(vec[i].value) != 0) // If it is a variable
         {
-            if (env -> variables.count(vec[i].value) != 0) // If it is a variable
-            {
-                newExpression.push_back(env -> variables[vec[i].value]);
-            }
-            // else if (env.functions.count(vec[i].value) != 0) // It is a function
-            // {
-            //     i += 2; // After the function name there is a parenthesis, so += 2 to skip that parenthesis
-            //     int start = i;
-            //     while (i < x && vec[i].name.compare(LPAREN))
-            //     {
-            //         i++;
-            //     }
-            //     std::vector<Token> arguments(vec.begin() + start, vec.begin() + i); // i finishes pointing to the left parenthesis
-
-            //     std::string result = env.functions[vec[i].value].callFun(arguments);
-
-            //     newExpression.push_back(Token {Evaluator::getTypeOfVariable(result), result});
-            // }
+            newExpression.push_back(env -> variables[vec[i].value]);
         }
+        // else if (env.functions.count(vec[i].value) != 0) // It is a function
+        // {
+        //     i += 2; // After the function name there is a parenthesis, so += 2 to skip that parenthesis
+        //     int start = i;
+        //     while (i < x && vec[i].name.compare(LPAREN))
+        //     {
+        //         i++;
+        //     }
+        //     std::vector<Token> arguments(vec.begin() + start, vec.begin() + i); // i finishes pointing to the left parenthesis
+
+        //     std::string result = env.functions[vec[i].value].callFun(arguments);
+
+        //     newExpression.push_back(Token {Evaluator::getTypeOfVariable(result), result});
+        // }
         else
             newExpression.push_back(vec[i]);
     }

@@ -14,12 +14,10 @@ std::string Parser::evaluateTree(NodeAST* node){
     if (node == NULL)
         return ILLEGAL;
 
-    if (node->getValue().name.compare(INTEGER) == 0 || node->getValue().name.compare(DECIMAL)== 0
-    || node->getValue().name.compare(TRUE)== 0 || node->getValue().name.compare(FALSE)==0){
+    else if (node->getValue().name.compare(INTEGER) == 0 || node->getValue().name.compare(DECIMAL)== 0
+    || node->getValue().name.compare(TRUE)== 0 || node->getValue().name.compare(FALSE)==0 || node -> getValue().name.compare(WORD) == 0){
         return node->getValue().value;
     }
-    else if (node -> getValue().name.compare(WORD) == 0)
-        return ILLEGAL;
 
     std:: string left = evaluateTree(node->getLeftChild());
     std:: string right = evaluateTree(node->getRightChild());
@@ -49,10 +47,10 @@ std::string Parser::evaluateTree(NodeAST* node){
         double b = stod(right);
         
         if (node->getValue().value.compare("+") == 0){
-            if((left.compare(STRING) != 0 && right.compare(STRING) == 0)||
-            (left.compare(STRING) == 0 && right.compare(STRING) != 0)) {
+            if((left.compare(WORD) != 0 && right.compare(WORD) == 0)||
+            (left.compare(WORD) == 0 && right.compare(WORD) != 0)) {
                 return ILLEGAL;
-            } else if(left.compare(STRING) == 0 && right.compare(STRING) == 0){
+            } else if(left.compare(WORD) == 0 && right.compare(WORD) == 0){
             std:: string c = left.append(right);
                 return c;
             } else {
