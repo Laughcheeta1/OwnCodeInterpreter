@@ -16,7 +16,7 @@ class Function
         /// @brief runs this function
         /// @param arguments the arguments the function should recieve
         /// @return the return value of the function
-        std::string callFunction(std::vector<std::string> arguments);
+        std::string callFunction(std::vector<Token> arguments);
 };
 
 #endif
