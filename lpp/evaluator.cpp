@@ -15,13 +15,13 @@ Cases that can be passed to us:
 */
 
 
-std::string Evaluator::evaluate(std::vector<Token> input, Environment env)
+std::string Evaluator::evaluate(std::vector<Token> input, Environment* env)
 {
     Evaluator e(input, env);
     return e.evaluateExpression();
 }
 
-Evaluator::Evaluator(std::vector<Token> vector, Environment environment)
+Evaluator::Evaluator(std::vector<Token> vector, Environment* environment)
 {
     vec = vector;
     size = vector.size();
@@ -34,19 +34,19 @@ std::string Evaluator::evaluateExpression()
     if (!vec[0].name.compare(IFEXPRESSION))
     {
         IfExpression::evaluateIfExpression(vec, env);
-        return NULL;
+        return "Finished if expression";
     }
 
     else if (!vec[0].name.compare(FUNCTION))
     {
         // env.functions[vec[1].value] = CustomFun(vec); // Enter the new function to the environment
-        return NULL;
+        return "Function was declared";
     }
 
     else if (!vec[0].name.compare(VAR))
     {
         declareVariable();
-        return NULL;
+        return "Variable has been declared";
     }
     
     // Must be a case 1
@@ -61,9 +61,9 @@ std::string Evaluator::evaluateRegularExpression()
     {
         if (!vec[i].name.compare(WORD))
         {
-            if (env.variables.count(vec[i].value) != 0) // If it is a variable
+            if (env -> variables.count(vec[i].value) != 0) // If it is a variable
             {
-                newExpression.push_back(env.variables[vec[i].value]);
+                newExpression.push_back(env -> variables[vec[i].value]);
             }
             // else if (env.functions.count(vec[i].value) != 0) // It is a function
             // {
@@ -76,11 +76,8 @@ std::string Evaluator::evaluateRegularExpression()
             //     std::vector<Token> arguments(vec.begin() + start, vec.begin() + i); // i finishes pointing to the left parenthesis
 
             //     std::string result = env.functions[vec[i].value].callFun(arguments);
-            //     Token tok;
-            //     tok.name = Evaluator::getTypeOfVariable(result);
-            //     tok.value = result;
 
-            //     newExpression.push_back(tok);
+            //     newExpression.push_back(Token {Evaluator::getTypeOfVariable(result), result});
             // }
         }
         else
@@ -99,10 +96,7 @@ void Evaluator::declareVariable()
 {
     std::vector<Token> expression(vec.begin() + 3, vec.end()); // thats the part after the assign
     std::string result = Evaluator::evaluate(expression, env);
-    Token tok;
-    tok.name = Evaluator::getTypeOfVariable(result);
-    tok.value = result;
-    env.variables[vec[1].value] = tok;
+    env -> variables[vec[1].value] = Token {Evaluator::getTypeOfVariable(result), result};
 }
 
 std::string Evaluator::getTypeOfVariable(std::string variable)
@@ -113,10 +107,10 @@ std::string Evaluator::getTypeOfVariable(std::string variable)
     }
     
     int i = 0;
-    while (i < variable.size() && variable[i] != '.')
+    while (i < (int)variable.size() && variable[i] != '.')
     {
         i ++;
     }
 
-    return (i < variable.size()) ? DECIMAL : INTEGER;
+    return (i < (int)variable.size()) ? DECIMAL : INTEGER;
 }

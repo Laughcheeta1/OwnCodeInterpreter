@@ -10,7 +10,7 @@ int main()
     std::cout << "C--\nEl Frances, El Mamado y el Bitchless\nc-- Registered Trademark\nEscriba '.exit' para salir.\n\nc-- >>> ";
     std::string input;
     Lexer lexer;
-    Environment env;
+    Environment* env = new Environment();
     while (std::getline(std::cin, input) && input.compare(".exit")) // If the input == ".exit", the method will return a 0, value that is interpreted by the language as a false
     {
         std::vector<Token> v = lexer.readLine(input);

@@ -13,7 +13,7 @@
 #include "../Header/evaluator.h"
 
 
-void IfExpression::evaluateIfExpression(std::vector<Token> a, Environment env){
+void IfExpression::evaluateIfExpression(std::vector<Token> a, Environment* env){
 
     std::vector<Token> ar;
 

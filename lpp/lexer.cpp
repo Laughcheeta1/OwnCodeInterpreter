@@ -303,6 +303,8 @@
 
             if (!close) // Print the sign at the end of the line, meaninig that the function is processing
                 std::cout << "----";
+
+            tokens.push_back(Token {NEWLINE, NEWLINE});
         }
     }
 
@@ -368,7 +370,11 @@
 
             if (!close) // Print the sign at the end of the line, meaninig that the if is processing
                 std::cout << "----";
+
+            tokens.push_back(Token {NEWLINE, NEWLINE});
         }
+
+        tokens.erase(tokens.end() - 1); // Delete the last New Line
     }
 
 std::vector<Token> Lexer::purifyTokens()

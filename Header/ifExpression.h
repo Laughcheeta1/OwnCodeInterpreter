@@ -14,7 +14,7 @@ class IfExpression
 
 
  public:
-    static void evaluateIfExpression(std::vector<Token> a, Environment env);
+    static void evaluateIfExpression(std::vector<Token> a, Environment* env);
 
 };
 

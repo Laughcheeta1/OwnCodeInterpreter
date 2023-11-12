@@ -15,15 +15,15 @@ class Evaluator
         int position;
         int size;
         std::vector<Token> vec;
-        Environment env;
+        Environment* env;
 
         std::string evaluateExpression();
         std::string evaluateRegularExpression();
         void declareVariable();
         
     public:
-        explicit Evaluator(std::vector<Token> vector, Environment environment);
-        static std::string evaluate(std::vector<Token> input, Environment env);
+        explicit Evaluator(std::vector<Token> vector, Environment* environment);
+        static std::string evaluate(std::vector<Token> input, Environment* env);
         static std::string getTypeOfVariable(std::string variable);
 };
 
