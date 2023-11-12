@@ -41,22 +41,21 @@ std::string Parser::evaluateTree(NodeAST* node){
     } else if ((left.compare(TRUE) == 0 || left.compare(FALSE)==0) && 
     (!(right.compare(TRUE)== 0) || !(right.compare(FALSE)==0))){
         return ILLEGAL;
-    } else {
+    } if((left.compare(WORD) != 0 && right.compare(WORD) == 0)||
+        (left.compare(WORD) == 0 && right.compare(WORD) != 0)) {
+        return ILLEGAL;
+    } else if(left.compare(WORD) == 0 && right.compare(WORD) == 0){
+        std:: string c = left.append(right);
+        return c;
+    }  
+    else {
 
         double a = stod(left);
         double b = stod(right);
         
         if (node->getValue().value.compare("+") == 0){
-            if((left.compare(WORD) != 0 && right.compare(WORD) == 0)||
-            (left.compare(WORD) == 0 && right.compare(WORD) != 0)) {
-                return ILLEGAL;
-            } else if(left.compare(WORD) == 0 && right.compare(WORD) == 0){
-            std:: string c = left.append(right);
-                return c;
-            } else {
-                std:: string c = std::to_string(a+b);
-                return c;
-            }
+            std:: string c = std::to_string(a+b);
+            return c;
         }
                 
         else if (node->getValue().value.compare("-") == 0){
