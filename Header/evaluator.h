@@ -18,14 +18,13 @@ class Evaluator
         Environment env;
 
         std::string evaluateExpression();
-        void evaluateIf();
-        std::string evaluateVarOrFunc();
+        std::string evaluateRegularExpression();
         void declareVariable();
-        void declareFunction();
         
     public:
         explicit Evaluator(std::vector<Token> vector, Environment environment);
-        static std::vector<Token> evaluate(std::vector<Token> input, Environment env);
+        static std::string evaluate(std::vector<Token> input, Environment env);
+        static std::string getTypeOfVariable(std::string variable);
 };
 
 #endif

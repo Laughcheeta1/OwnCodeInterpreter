@@ -35,6 +35,8 @@ class ast
         NodeAST* placeOperand(NodeAST* previous, Token token); // Places the operand in the place it should
                                                                 // be, with the sons it should have.
         NodeAST* getRoot(NodeAST* node); // Returns the head of the tree you created
+
+        // This function itself checks for the types of variable each things is, so we do not have to worry about it
         NodeAST* makeTree(); // Returns a pointer to the head node of the tree
 
     public:

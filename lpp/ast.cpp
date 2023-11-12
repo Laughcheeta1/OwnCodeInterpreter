@@ -123,13 +123,7 @@ using namespace std;
 
         while (currentIndex < size && tokens[currentIndex].name.compare(RPAREN))
         {   
-            if (tokens[currentIndex].name.compare(WORD) == 0)
-            {
-                // TODO: could be a variable, but for now, return NULL
-                freeTree(getRoot(lastNode));
-                return NULL;
-            }
-            else if (tokens[currentIndex].name.compare(NEGATION) == 0)
+            if (tokens[currentIndex].name.compare(NEGATION) == 0)
             {   
                 int numberOfNegation = 0;
                 while (currentIndex < size && tokens[currentIndex].name.compare(NEGATION) == 0)
