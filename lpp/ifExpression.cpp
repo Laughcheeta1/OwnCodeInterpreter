@@ -32,6 +32,9 @@ void IfExpression::evaluateIfExpression(std::vector<Token> a, Environment* env){
         i = i + 2;
 
         while(a[i].name.compare(RSBRACE) != 0){
+            if (a[i].name.compare(NEWLINE) == 0 && a[i-1].name.compare(LSBRACE) == 0){
+                i = i + 1;
+            }
             if (a[i].name.compare(IFEXPRESSION) == 0){
                 std::vector<Token> vectorIf;
                 while(a[i].name.compare(RSBRACE)!=0){
@@ -56,17 +59,20 @@ void IfExpression::evaluateIfExpression(std::vector<Token> a, Environment* env){
                 std::string result = Evaluator::evaluate(aux,env);
                 std::cout << "Result inside If: " << result << std::endl;
             } else if (a[i].name.compare(NEWLINE)==0 && a[i-1].name.compare(RSBRACE)==0) {
+
                 i = i+1;
 
                 std::vector<Token> aux;
 
-                while(a[i].name.compare(NEWLINE) != 0 || a[i+1].name.compare(RSBRACE) != 0){
+                while(a[i].name.compare(NEWLINE) != 0 && a[i].name.compare(RSBRACE) != 0){
 
                     aux.insert(aux.end(),a[i]);
                     i = i + 1;         
                 }
 
-                i = i+1;
+                std::string result = Evaluator::evaluate(aux,env);
+                std::cout << "Result inside If: " << result << std::endl;
+
             }
             
         }
