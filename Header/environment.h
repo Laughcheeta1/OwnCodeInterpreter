@@ -1,15 +1,15 @@
 #ifndef ENVIRONMENT_H
 #define ENVIRONMENT_H
-#include <unordered_map>
+#include <map>
 #include <string>
-#include "function.h"
+// #include "customFun.h"
 #include "Token.h"
 
 class Environment
 {
     public:
-        std::unordered_map<std::string, Token> variables;
-        std::unordered_map<std::string, Function> functions;
+        std::map<std::string, Token> variables;
+        // std::map<std::string, CustomFun> functions;
 };
 
 #endif

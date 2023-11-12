@@ -4,6 +4,7 @@
 #include <vector>
 #include <iterator>
 #include <string.h>
+#include "../Header/ifExpression.h"
 #include "../Header/Token.h"
 #include "../Header/lexer.h"
 #include "../Header/ast.h"
@@ -12,7 +13,7 @@
 #include "../Header/evaluator.h"
 
 
-void evaluateIf(std::vector<Token> a, Environment env){
+void IfExpression::evaluateIfExpression(std::vector<Token> a, Environment env){
 
     std::vector<Token> ar;
 
@@ -39,7 +40,7 @@ void evaluateIf(std::vector<Token> a, Environment env){
                 }
                 
                 vectorIf.insert(vectorIf.end(),a[i]);
-                evaluateIf(vectorIf,env);
+                evaluateIfExpression(vectorIf,env);
 
                 i = i+1;
             } else if(a[i-1].name.compare(LSBRACE) == 0 || a[i-1].name.compare(NEWLINE) == 0 ){

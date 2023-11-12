@@ -1,8 +1,8 @@
 #include "../Header/evaluator.h"
 #include "../Header/ast.h"
 #include "../Header/parser.h"
-#include "../Header/if.h"
-#include "../Header/function.h"
+#include "../Header/ifExpression.h"
+// #include "../Header/customFun.h"
 
 /*
 Cases that can be passed to us:
@@ -33,13 +33,13 @@ std::string Evaluator::evaluateExpression()
 {
     if (!vec[0].name.compare(IFEXPRESSION))
     {
-        If::evaluateIf(vec, env);
+        IfExpression::evaluateIfExpression(vec, env);
         return NULL;
     }
 
     else if (!vec[0].name.compare(FUNCTION))
     {
-        env.functions[vec[1].value] = Function(vec); // Enter the new function to the environment
+        // env.functions[vec[1].value] = CustomFun(vec); // Enter the new function to the environment
         return NULL;
     }
 
@@ -65,23 +65,23 @@ std::string Evaluator::evaluateRegularExpression()
             {
                 newExpression.push_back(env.variables[vec[i].value]);
             }
-            else if (env.functions.count(vec[i].value) != 0) // It is a function
-            {
-                i += 2; // After the function name there is a parenthesis, so += 2 to skip that parenthesis
-                int start = i;
-                while (i < x && vec[i].name.compare(LPAREN))
-                {
-                    i++;
-                }
-                std::vector<Token> arguments(vec.begin() + start, vec.begin() + i); // i finishes pointing to the left parenthesis
+            // else if (env.functions.count(vec[i].value) != 0) // It is a function
+            // {
+            //     i += 2; // After the function name there is a parenthesis, so += 2 to skip that parenthesis
+            //     int start = i;
+            //     while (i < x && vec[i].name.compare(LPAREN))
+            //     {
+            //         i++;
+            //     }
+            //     std::vector<Token> arguments(vec.begin() + start, vec.begin() + i); // i finishes pointing to the left parenthesis
 
-                std::string result = env.functions[vec[i].value].callFunction(arguments);
-                Token tok;
-                tok.name = Evaluator::getTypeOfVariable(result);
-                tok.value = result;
+            //     std::string result = env.functions[vec[i].value].callFun(arguments);
+            //     Token tok;
+            //     tok.name = Evaluator::getTypeOfVariable(result);
+            //     tok.value = result;
 
-                newExpression.push_back(tok);
-            }
+            //     newExpression.push_back(tok);
+            // }
         }
         else
             newExpression.push_back(vec[i]);

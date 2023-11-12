@@ -7,14 +7,14 @@
 #include "environment.h"
 #include <vector>
 
-class If 
+class IfExpression 
 {
  private:
 
 
 
  public:
-    static void evaluateIf(std::vector<Token> a, Environment env);
+    static void evaluateIfExpression(std::vector<Token> a, Environment env);
 
 };
 
