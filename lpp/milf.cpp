@@ -20,7 +20,7 @@ std::string Milf::callFunction(std::vector<Token> arguments)
     Environment* envMilf = new Environment();
     int i = 0;
     //create variables and put there value
-    for(i ; i< arguments.size()*3 ; i+3){//for every argument create variable with funDeclarationExpression begining and argument value
+    for(; i < (int)arguments.size() * 3 ; i += 3){//for every argument create variable with funDeclarationExpression begining and argument value
         envMilf -> variables[vec[1].value] = Token {Evaluator::getTypeOfVariable(this->funDeclarationExpression.at(i+1)), arguments.at(2*i/3)}; // (var a, var b) (1,2) 
     }
 
@@ -34,7 +34,7 @@ std::string Milf::callFunction(std::vector<Token> arguments)
         aux.insert(aux.end(),this->funDeclarationExpression[i]);
         i = i + 1;
 
-        if(this->funDeclarationExpression[i].name.compare('bdsm')){
+        if(this->funDeclarationExpression[i].name.compare(RETURN)){
             std::string result = Evaluator::evaluate(aux,envMilf);
             return result;
         }
