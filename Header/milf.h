@@ -9,6 +9,9 @@ class Milf
     public:
         explicit Milf(std::vector<Token> funDeclarationExpression);
         std::string callFunction(std::vector<Token> arguments);
+
+    private:
+        std::vector<Token> funDeclarationExpression;
 };
 
 #endif
