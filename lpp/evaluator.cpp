@@ -2,17 +2,7 @@
 #include "../Header/ast.h"
 #include "../Header/parser.h"
 #include "../Header/ifExpression.h"
-// #include "../Header/customFun.h"
-
-/*
-Cases that can be passed to us:
-    1-  5 + 7   This is a direct expression
-    2-  x + y  This is a direct expression, but with variables
-    3-  if() []  This is an if
-    4-  func()  This is a function calling
-    5-  var x = ...  This is a variable declaration
-    6-  milf func() []  This is a fucntion declaration
-*/
+#include "../Header/milf.h"
 
 
 std::string Evaluator::evaluate(std::vector<Token> input, Environment* env)
@@ -39,7 +29,7 @@ std::string Evaluator::evaluateExpression()
 
     else if (!vec[0].name.compare(FUNCTION))
     {
-        // env.functions[vec[1].value] = CustomFun(vec); // Enter the new function to the environment
+        env -> functions[vec[1].value] = new Milf(vec, vec[1].value); // Enter the new function to the environment
         return "Function was declared";
     }
 
@@ -57,28 +47,24 @@ std::string Evaluator::evaluateRegularExpression()
 {
     int x = vec.size();
     std::vector<Token> newExpression;
-    for (int i = 0; i < x; i++)
+    for ( ; position < x; position++)
     {
-        if (env -> variables.count(vec[i].value) != 0) // If it is a variable
+        if (env -> variables.count(vec[position].value) != 0) // If it is a variable
         {
-            newExpression.push_back(env -> variables[vec[i].value]);
+            newExpression.push_back(env -> variables[vec[position].value]);
         }
-        // else if (env.functions.count(vec[i].value) != 0) // It is a function
-        // {
-        //     i += 2; // After the function name there is a parenthesis, so += 2 to skip that parenthesis
-        //     int start = i;
-        //     while (i < x && vec[i].name.compare(LPAREN))
-        //     {
-        //         i++;
-        //     }
-        //     std::vector<Token> arguments(vec.begin() + start, vec.begin() + i); // i finishes pointing to the left parenthesis
+        else if (env -> functions.count(vec[position].value) != 0) // It is a function
+        {
+            std::string funcName = vec[position].value; // Store the func name, since we continue changing i
+            position += 2; // After the function name there is a parenthesis, so += 2 to skip that parenthesis
+            std::vector<Token> arguments = getArguments();
 
-        //     std::string result = env.functions[vec[i].value].callFun(arguments);
+            std::string result = env -> functions[funcName] -> callFunction(arguments);
 
-        //     newExpression.push_back(Token {Evaluator::getTypeOfVariable(result), result});
-        // }
+            newExpression.push_back(Token {Evaluator::getTypeOfVariable(result), result});
+        }
         else
-            newExpression.push_back(vec[i]);
+            newExpression.push_back(vec[position]);
     }
 
 
@@ -110,4 +96,26 @@ std::string Evaluator::getTypeOfVariable(std::string variable)
     }
 
     return (i < (int)variable.size()) ? DECIMAL : INTEGER;
+}
+
+std::vector<Token> Evaluator::getArguments()
+{
+    std::vector<Token> result;
+    std::string evaluateExpressionResult;
+    while (position < size && vec[position].name.compare(RPAREN))
+    {
+        std::vector<Token> expression; // Since we can get something like (3 + 5, 9), we need to convert that expressions into a single thing
+        while (position < size && vec[position].name.compare(COMMA) && vec[position].name.compare(RPAREN))
+        {
+            expression.push_back(vec[position]);
+            position++;
+        }
+
+        evaluateExpressionResult = Evaluator::evaluate(expression, env);
+        result.push_back(Token {getTypeOfVariable(evaluateExpressionResult), evaluateExpressionResult});
+
+        position++;
+    }
+    
+    return result;
 }
