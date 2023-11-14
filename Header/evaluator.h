@@ -9,6 +9,8 @@
 /*
 The purpose of this class is for recieving a line of code and decide what to do with it
 */
+class Environment;
+
 class Evaluator 
 {
     private:
@@ -20,6 +22,7 @@ class Evaluator
         std::string evaluateExpression();
         std::string evaluateRegularExpression();
         void declareVariable();
+        std::vector<Token> getArguments();
         
     public:
         explicit Evaluator(std::vector<Token> vector, Environment* environment);
